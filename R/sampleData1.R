@@ -1,0 +1,13 @@
+#' Sample Episode Start and Episode Continuation Data (2 Column)
+#'
+#' A data set that contains Episode Start (in this case, questions) and Episode Contination (in this case, responses) data in a
+#' 2 column format. This data was randomly generated. Case basis: 4 students in a group discussion questions in a STEM course
+#' at a major university.
+#'
+#' @format A data frame with 466 rows and 2 variables:
+#' \describe{
+#'   \item{ep_start}{If participant in the graph has initiated an episode}
+#'   \item{ep_cont}{If participant in the graph has raised a response to the previous episode}
+#'   ...
+#' }
+"sampleData1"

@@ -1,0 +1,24 @@
+#' Sample Attribute Data
+#'
+#' A data set that sample attribute data to complement Sample Data 1. This data was randomly generated.
+#' This data set is for students who are currently
+#' taking a STEM course at a major university. 4 students are in this sample study.
+#'
+#'
+#' @format A data frame of 4 rows with 12 variables
+#' \describe{
+#'   \item{node}{Student identifier in the group}
+#'   \item{gender}{Gender of student}
+#'   \item{ethnicity}{Ethnicity of student}
+#'   \item{current_gpa}{Current overall GPA of student}
+#'   \item{first_generation}{If the student is a first generation standing}
+#'   \item{stem_major}{If student is in a STEM major}
+#'   \item{major}{Major of the student}
+#'   \item{course_reason}{Reasons to why student is taking the course}
+#'   \item{class_level}{Current class standing at the university}
+#'   \item{number_prior_ap}{Number of prior AP courses taken}
+#'   \item{residency}{Current residency of the student}
+#'   \item{sat_score}{SAT score for admission}
+#'   ...
+#' }
+"attributeData"
