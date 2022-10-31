@@ -1,0 +1,409 @@
+---
+title:
+  formatted:  "\\pkg{discourseGT}: An \\proglang{R} package to analyze discourse networks in educational contexts"
+  plain:     "discourseGT: An R package to analyze discourse networks in educational contexts"
+  short:     "\\pkg{discourseGT}: An \\proglang{R} package to analyze educational discourse networks"
+documentclass: jss
+citation_package: natbib
+output: rticles::jss_article
+classoption: nojss
+bibliography: references.bib
+bibliography_style: plainnat
+vignette: >
+  %\VignetteIndexEntry{discourseGT}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+author: 
+  - name: Joshua P. Le
+    affiliation: 'University of California `\\`{=latex} San Diego'
+  - name: Albert Chai
+    affiliation: 'University of California `\\`{=latex} San Diego \AND'
+  - name: Andrew S. Lee
+    affiliation: 'University of California `\\`{=latex} Los Angeles'
+  - name: Kevin Banh
+    affiliation: 'University of California `\\`{=latex} San Diego \AND'
+  - name: Priya Pahal
+    affiliation: 'University of California `\\`{=latex} San Diego'
+  - name: Stanley M. Lo
+    affiliation: 'University of California `\\`{=latex} San Diego'
+    address: >
+      9500 Gilman Dr #0355
+      La Jolla, CA 92093-0355
+    email: \email{smlo@ucsd.edu}
+abstract: >
+  Student collaborations and discussions in the classroom are important components of the learning process. Current methods for analyzing discourse in these educational contexts are predominantly qualitative. To complement the existing methodologies in education research, \pkg{discourseGT} is an \proglang{R} package that adapts graph theory and social network analysis to analyze conversation patterns when students collaborate in small groups. Ths software package takes data on the sequential student talk-turns in a classroom discussion and produces statistics and plots based on both graph theory and other non-graph theory parameters. Overall, these new features in \pkg{discourseGT} can provide insight on the dynamics of student discussions relevant to education researchers.
+
+keywords: 
+  formatted:  [student group work, discourse network, graph theory, "\\pkg{discourseGT}", "\\proglang{R}"]
+  plain:      [student group work, discourse network, graph theory, discourseGT, R]
+preamble: >
+  \usepackage{longtable}
+  \usepackage{makecell}
+  \usepackage{tabularx}
+  \usepackage{hyperref}
+  \usepackage{graphicx}
+  \usepackage{amsmath}
+  \usepackage{booktabs}
+  \usepackage{amsfonts}
+  \usepackage{tabulary}
+  \usepackage{ragged2e}
+  \usepackage{floatrow}
+  \floatsetup[table]{capposition=top}
+  \floatsetup[figure]{capposition=top}
+longtable: true
+graphics: yes
+---
+
+```{r, include = FALSE}
+options(prompt = "R> ", continue = "+ ", width = 70, useFancyQuotes = FALSE)
+```
+
+# Introduction
+Vygotsky postulated that social interactions are crucial to individual learning and cognitive development [@Vygotsky_1978]. Subsequent studies in education research have found that small-group discussions can help students develop disciplinary understanding [@Freeman_2014] and enhance skills in problem solving [@Heller_1992], critical thinking [@Webb_1982b, @Gokhale_1995, @Bligh_2000], communication [@Webb_1994], and metacognition [@Webb_2003, @Veenman_2006, @Bromme_2010]. Furthermore, small-group discussions can also improve student interest and motivation [@Skinner_1993, @Ryan_2000] as well as course completion rates and persistence in science, technology, engineering, and mathematics (STEM) majors [@Tinto_1997, @Freeman_2014, @Loes_2017].
+
+Small-group discussions are typically studied using discourse analysis or other similar qualitative methodologies. Discourse analysis examines the content of a discussion and considers how and why certain actions occur [@Gee_2011, @Dunn_2016]. In education research, discourse analysis has been used to study student cognition [@King_1994, @Fall_2000, @Sfard_2001, @Anderson_2001, @Kittleson_2004, @Webb_2006, @Molenaar_2017], scientific argumentation [@Chiu_2008a, @Chiu_2008b, @Soter_2008] collaboration [@Sfard_Kieran_2001, @Webb_2002, @Empson_2003, @Wells_2006, @Premo_2018], classroom dynamics [@Nystrand_2003, @White_2003, @Ikpeze_2007], and student identity in STEM [@Brown_2005, @Bishop_2012, @Wood_2013, @Kumpulainen_2017]. Most of these methodologies focus on the moment-to-moment discourse with in-depth qualitative analyses but do not follow how a discussion progresses from person to person over time in a quantifiable manner.
+
+To complement these existing methodologies, we have developed a process that considers student discourse as a network (a "discourse network") and quantitatively examines the dynamics of small-group discussions using graph theory and network analysis [@Chai_2019, @Liyanage_2021]. Many contemporary applications and software packages are optimized for large-scale networks. For example, \pkg{igraph} [@R-igraph], \pkg{network} [@R-networkpkg], and \pkg{sna} [@R-sna] were developed to analyze social media networks [@Jones_2017], epidemiological networks [@Christakis_2011], and political networks [@Hobbs_2016], respectively. In contrast, discourse networks in educational contexts are substantially smaller, typically with only 3-8 students [@Wagner_2018]. Consequently, certain parameters that are relevant for these larger networks are not necessarily applicable, and analysis of discourse networks further demands additional parameters beyond what is available in graph theory [@Chai_2019, @Lou_2001].
+
+We have decided to develop our software package with the \proglang{R} programming language [@R-base] because of its open-source nature and extensibility of packages. Instead of rebuilding every component from the beginning, we use existing network analysis software packages, including \pkg{igraph} [@R-igraph], \pkg{ggpubr} [@R-ggpubr], \pkg{GGally} [@R-GGally], \pkg{network} [@R-networkpkg], \pkg{ggplot2} [@R-ggplot2], \pkg{dplyr} [@R-dplyr], \pkg{ggrepel} [@R-ggrepel], and \pkg{sna} [@R-sna], as well as other relevant software packages such as \pkg{BiocManager} [@R-biocmanager] and \pkg{RCy3} [@R-rcy3] in \proglang{R}, and \pkg{Cytoscape} [@Cytoscape]. At the time of writing, the current version of the package is 1.1.7 (\url{https://CRAN.R-project.org/package=discourseGT}) [@R-discourseGT], and the current version of the graphical user interface (GUI) is 1.1.0 (\url{https://sites.google.com/ucsd.edu/dgt/home}).
+
+This paper is organized into five additional sections beyond the Introduction. Section 2 describes important background information including an operationalized definition of discourse networks with relevant graph theory parameters and other non-graph theory parameters. Section 3 outlines the general workflow of \pkg{discourseGT}. Section 4 offers a step-by-step case example that contextualizes the workflow with sample data. Section 5 examines the potential limitations and future developments of \pkg{discourseGT}. Section 6 provides information on the software package and dependency versions used to generate the results in this paper. Section 7 acknowledges other contributors to the development and distribution of this software package.
+
+# Background
+In any network, there exist nodes with edges connecting them [@Godsil_2001]. The precise meaning for these nodes and edges can change depending on the context of the network. Discourse networks require relational data that join two participants in a discussion with some kind of discourse connection [@Wagner_2018]. In our \pkg{discourseGT}, we track the sequential order of students who speak in a small-group discussion [@Chai_2019]. Nodes represent members of the group, which are students and can also sometimes include peer facilitators, teaching assistants, and/or the instructor of a course. Edges represent talk-turns or the progression of different individuals speaking. A directed edge pointing from Node A to Node B indicates that Participant B spoke after Participant A. This directionality does not necessarily indicate that Participant A talked directly to Participant B, as all members of the group likely listened to the conversation. Instead, edges could be interpreted in a few different ways. Beyond tracking the sequential order of talk-turns, edges may indicate who is willing to speak after others, who contributes ideas that could be expanded upon or responded to, and/or who has the agency or power at the moment to speak in the group [@Chai_2019].
+
+## Graph Theory Parameters
+In our previous work [@Chai_2019, @Liyanage_2021], we identified a subset of graph theory parameters that are relevant to small-group discussions in educational contexts as shown in Table \ref{table:gt_param}.
+
+\begin{table}[H]
+\setlength{\tymin}{70pt}
+\let\raggedright\RaggedRight
+\begin{tabulary}{\textwidth}{@{}LLLL@{}}
+\toprule
+\textbf{Parameter}      & \textbf{Graph Theory \newline Definition}                                  & \textbf{Social Network Definition}                         & \textbf{Discourse Network Definition}                          \\ \midrule
+Node           & An object of interest                                    & Typically a person                                & Participant in a small group discussion               \\
+Edge           & A connector between two nodes                            & Flow of information between two people            & Talk-turn between two individuals                     \\
+Direction      & Defines which node points to another using the edge      & Indicates which person has ties to the other      & Indicates which individual talks after the other      \\
+Weight         & A number associated with an edge                         & Frequency of information flow between two people  & Frequency of a talk-turn between two individuals      \\
+Degree         & Number of edges connected to a node                      & Number of people an individual has ties to        & Number of people an individual talks before and after \\
+Density        & Number of edges divided by the number of possible edges  & Interactions occurring among different people     & Talk-turns occurring among different individuals      \\
+Centrality     & A number for the importance of a given node in the graph & Amount of influence of each person                & Amount of talk-turn contribution of an individual     \\
+Centralization & A number for the importance of the central node          & Dependence of a network on its most active person & Dependence of a group on its most active individual   \\
+Subgraph       & A smaller graph within a graph                           & Individuals who have closer ties to each other    & Individuals who talk after each other more            \\ \bottomrule
+\end{tabulary}
+\caption{Graph theory parameters used in \pkg{discourseGT}}
+\label{table:gt_param}
+\end{table}
+
+## Non-Graph Theory Parameters
+In addition to parameters derived from graph theory and network analysis, \pkg{discourseGT} also computes non-graph theory (NGT) parameters that can provide additional insight into the dynamics of student discussions in small groups. These include episode length, number of talk-turns per hour, normalized turn ratio (NTR), and an equitability measurement.
+
+In discourse networks, an "Episode" describes a subset of talk-turns within a discussion. The beginning and end of an episode are defined by and dependent on the researcher's interest --- e.g. bounded by responses to a specific question [@Chai_2019] or talk-turns within a specific classroom activity [@Liyanage_2021]. Episode length is the number of talk-turns within an episode, e.g. from question to question or from activity to activity. Longer episodes may indicate that participants are engaged in more in-depth discussions that require multiple talk-turns to elaborate on ideas.
+
+The number of talk-turns per hour describes the rate at which a participant contributes to the conversation, allowing for the direct comparison of all participants within a group. In \pkg{discourseGT}, a talk-turn can be classified as either a start to an episode (`ep_start`) or a continuation of an episode (`ep_cont`). Therefore, \pkg{discourseGT} computes the number of episode-start talk-turns per hour (Equation \ref{eq:1}) and the number of episode-continue talk-turns per hour (Equation \ref{eq:2}).
+
+\begin{equation}\label{eq:1}
+\text{ep\_start per hour} = \frac{\text{Number of episode starts by a participant}}{\text{Time in hours}}
+\end{equation}
+
+\begin{equation}\label{eq:2}
+\text{ep\_cont per hour} = \frac{\text{Number of episode continuations by a participant}}{\text{Time in hours}}
+\end{equation}
+
+Normalized turn ratio (NTR) allows for the comparison of participant activities across discourse networks that may have different total numbers of talk-turns [@Chai_2019]. In a given discussion, \pkg{discourseGT} calculates the fair-share number of talk-turns per participant (Equation \ref{eq:3}), and NTR describes each of their participation relative to this fair share (Equation \ref{eq:4}). If a participant has an NTR >1.0, then they talked more than their fair share of talk-turns, independent of the size of the group. Similarly, if a participant has an NTR of <1.0, then they talked less than their fair share of talk-turns.
+
+\begin{equation}\label{eq:3}
+\text{Fair \ share \ number \ of \ talk-turns} = \frac{\text{Total \ number \ of \ talk-turns}}{\text{Number \ of \ group \ participants \ (nodes)}}
+\end{equation}
+
+\begin{equation}\label{eq:4}
+\text{Normalized \ Turn \ Ratio \ (NTR)} = \frac{\text{Number \ of \ talk-turns \ by \ a \ participant}}{\text{Fair \ share \ number \ of \ talk-turns}}
+\end{equation}
+
+To determine the equitability of talk-turn contributions from different participants within a group, \pkg(discourseGT) uses the Shannon Evenness Index ($E_H$). $E_H$ relies on the Shannon Diversity Index ($H'$), which was originally developed to measure the diversity or uncertainty of words in a string of text [@Shannon_1948] and has been widely used as a measurement of biodiversity within ecosystems [@Pielou_1966]. $E_H$ allows for the direct comparison of discourse networks among each other with a single measurement that describes the equitability of the distribution of talk-turns among all participants within a small-group discussion.
+
+\begin{equation}\label{eq:5}
+E_H = \frac{H'}{\ln{S}}
+\end{equation}
+
+\begin{equation}\label{eq:6}
+H' = -\sum_{i=1}^{S} p_i \cdot \ln{p_i}
+\end{equation}
+
+Here, $i$ is the index for each individual node representing a participant, and $S$ is the total number of participants in a discourse network. For each node, $p_i$ describes the proportion of talk-turns taken by that participant out of the total number of talk-turns in the discourse network.
+
+$E_H$ has a range from 0 to 1, inclusive, where 1 represents the maximum equitability among the participants within the discourse network.
+
+# discourseGT Workflow
+## General Workflow
+The functions of \pkg{discourseGT} were designed to be as modular as possible, making it possible to only run analyses of interest. Figure \ref{fig:workflow} represents the general workflow of \pkg{discourseGT}, and Table \ref{table:dgt_func} describes explicit function names organized by their general uses.
+
+\begin{figure}[H]
+\caption{General workflow of \pkg{discourseGT}. The raw data can either be converted to an \pkg{igraph} object for further analysis or directly passed for NGT analysis. All console output can be permanently stored to the user's local disk. Green represents the start of the workflow. Purple represents steps necessary to generate an \pkg{igraph} object. Blue represents the potential downstream uses of an \pkg{igraph} object. Orange represents NGT analysis. Red signals the end of the workflow.}
+\label{fig:workflow}
+\centering
+\includegraphics[scale=2]{maintext_files/figure-latex/workflow.png}
+\end{figure}
+
+\begin{longtable}[H]{@{}p{0.07\textwidth}p{0.27\textwidth}p{0.28\textwidth}p{0.28\textwidth}}
+\caption{List of all \pkg{discourseGT} functions}    %%%%<===
+\label{table:dgt_func}\\
+\toprule
+\textbf{Phase} & \textbf{Function Name} & \textbf{Parameter(s)} & \textbf{Description} \\ \midrule
+\endfirsthead
+\hline
+\textbf{Phase} & \textbf{Function Name} & \textbf{Parameter(s)} & \textbf{Description} \\ \midrule
+\endhead
+Purple\newline        &       \texttt{tabulate\_edges()}\newline        &       \texttt{input} – \texttt{data.frame} or \texttt{string}. Points to \texttt{.csv} file with talk-turn data in the question-and-response format.\newline\newline\texttt{iscsvfile} – \texttt{boolean}. \texttt{TRUE} if input is a \texttt{.csv} file. Else \texttt{FALSE}.\newline\newline\texttt{silentNodes} – \texttt{integer}. The number of nodes that do not interact with others.\newline       &        Calculates the weighted edge list from the input data and number of silent nodes not captured in the data.\newline \\
+
+Purple\newline        &       \texttt{prepareGraphs()}\newline         &       \texttt{raw\_data\_input} – \texttt{list}. Output of \texttt{tabulate\_edges()}.\newline\newline\texttt{project\_title} – \texttt{string}. Sets the title of the project.\newline\newline\texttt{weightedGraph} - \texttt{boolean}. \texttt{TRUE} if downstream analysis should account for weighted edges. Else \texttt{FALSE}.\newline        &       Prepares the \pkg{igraph} object from the weighted edge list. This is utilized by several downstream analytical functions.\newline \\
+
+Blue\newline          &       \texttt{coreNetAnalysis()}\newline       &       \texttt{ginp} – \texttt{list}. Output of \texttt{prepareGraphs()}.\newline      &       Analyzes the input \pkg{igraph} object and returns basic network statistics, as reasoned in Chai et al. 2019.\newline \\
+
+Blue\newline          &       \texttt{subgroupsNetAnalysis()}\newline  &       \texttt{ginp} – \texttt{list}. Output of \texttt{prepareGraphs()}.\newline\newline\texttt{raw\_input} – \texttt{data.frame}. Points to the original talk-turn data in the question-and-response format.\newline\newline\texttt{normalized} – \texttt{boolean}. Whether or not to normalize the betweenness centrality values relative to the graph.\newline        &       Analyzes the input \pkg{igraph} object for potential subgroups.\newline \\
+
+Blue\newline          &       \texttt{summaryNet()}\newline            &       \texttt{netintconfigData} – \texttt{list}. Output of \texttt{prepareGraphs()}.\newline\newline\texttt{coreNetAnalysisData} – \texttt{list}. Output of \texttt{coreNetAnalysis()}.\newline\newline\texttt{subgroupsNetAnalysisData} – \texttt{list}. Output of \texttt{subgroupsNetanalysis()}.\newline\newline\texttt{display} – \texttt{boolean}. Whether or not to print output to console.\newline        &        Summarizes the analytical output from several other functions into a single output.\newline \\
+
+Blue\newline          &       \texttt{basicPlot()}\newline             &       \texttt{ginp} – \texttt{list}. Output of \texttt{prepareGraphs()}.\newline\newline\texttt{graph\_selection\_input} – \texttt{integer}. Numerical value from 0 to 2, inclusive, which selects the graphing algorithm used. 0 = Fruchterman Reingold, 1 = Kamada Kawai, and 2 = Reingold Tilford.\newline\newline\texttt{curvedEdgeLines} – \texttt{boolean}. Whether or not to curve graph edges.\newline\newline\texttt{arrowSizeMultiplier} – \texttt{numeric}. Scales arrow sizes based on input factor.\newline\newline\texttt{logscale} – \texttt{boolean}. If \texttt{TRUE}, scale graph edges logarithmically. Else do not.\newline\newline\texttt{logBase} – \texttt{integer}. Logarithmic base to scale graph edges.\newline       &       Plots a basic network graph utilizing the default \proglang{R} visualization backend.\newline \\
+
+Blue\newline          &       \texttt{plot1Att()}\newline              &       \texttt{data} – \texttt{list}. Output of \texttt{prepareGraphs()}.\newline\newline\texttt{prop} – \texttt{integer}. Rescales the graph edge sizes.\newline\newline\texttt{graphmode} – \texttt{string}. Specifies the graphing algorithm used. Refer to \texttt{gplot.layout} for more options.\newline\newline\texttt{attribute} – \texttt{list}. Mapping to the attribute information.\newline\newline\texttt{attribute.label} – \texttt{string}. Name of attribute to display in the graph.\newline\newline\texttt{attribute.node.labels} – \texttt{list}. Mapping to the node labels.\newline\newline\texttt{attribute.nodesize} – \texttt{integer} or \texttt{list}. Mapping to universal or individualized node sizes, respectively.\newline       &       Plots a network graph with a single input attribute. Utilizes the \pkg{ggplot2} [@R-ggplot2] backend.\newline \\
+
+Blue\newline          &       \texttt{plot2Att()}\newline              &       \texttt{data} – \texttt{list}. Output of \texttt{prepareGraphs()}.\newline\newline\texttt{prop} – \texttt{integer}. Rescales the graph edge sizes.\newline\newline\texttt{graphmode} – \texttt{string}. Specifies the graphing algorithm used. Refer to \texttt{gplot.layout} for more options.\newline\newline\texttt{attribute1} – \texttt{list}. Mapping to the first attribute information.\newline\newline\texttt{attribute2} – \texttt{list}. Mapping to the second attribute information.\newline\newline\texttt{attribute1.label} – \texttt{string}. Name of the first attribute to display in the graph.\newline\newline\texttt{attribute2.label} – \texttt{string}. Name of the second attribute to display in the graph.\newline\newline\texttt{attribute.node.labels} – \texttt{list}. Mapping to the node labels.\newline\newline\texttt{attribute.nodesize} – \texttt{integer} or \texttt{list}. Mapping to universal or individualized node sizes, respectively.\newline       &       Plots a network graph with two input attributes. Utilizes the \pkg{ggplot2} [@R-ggplot2] backend.\newline \\
+
+Orange\newline        &       \texttt{plotNGTData()}\newline           &       \texttt{data} – \texttt{data.frame} or \texttt{string}. Points to \texttt{.csv} file with talk-turn data in the question-and-response format.\newline\newline\texttt{convoMinutes} – \texttt{integer}. Length of conversation, in minutes.\newline\newline\texttt{iscsvfile} – \texttt{boolean}. \texttt{TRUE} if input is a \texttt{.csv} file. Else \texttt{FALSE}.\newline\newline\texttt{silentNode} – \texttt{integer}. The number of nodes that do not interact with others.\newline        &       Analyzes non-graph theory statistics and visualizes them in three plots. These are elaborated on in Chai et al. 2019.\newline \\
+
+Red\newline           &       \texttt{writeData()}\newline             &       \texttt{project\_name} – \texttt{string}. Sets the title of the project.\newline\newline\texttt{objectfile} – \texttt{list}. The object to be exported to disk.\newline\newline\texttt{dirpath} – \texttt{string}. The location on disk where the exported file will be written.\newline       &       Writes any data object file as an appropriate format to a specified user directory. Images are saved with a resolution of 300dpi.\newline \\ \bottomrule
+\end{longtable}
+
+## Data Structure
+Collecting and formatting data for analysis by \pkg{discourseGT} is based on episodes and talk-turns [@Chai_2019]. Talk-turn data should be recorded as participants speak sequentially, which can be done with life observations in real time [@Chai_2019] or analysis of video or audio transcripts [@Liyanage_2021]. Be prepared to record the duration of the discussion (in minutes), which is required to determine the number of episode starts and episode continuations per unit of time. Talk-turn data are collected in a two-column table that tracks episode starts (`ep_start`) and episode continuations (`ep_cont`) and with each participant in the group assigned a unique identifier, such as a number (Table \ref{table:example}). Each row should only have a single participant's identifier entered once either in the `ep_start` or `ep_cont` column. An entry in the `ep_start` column denotes the beginning of a new episode. The boundaries of an episode are defined by the researcher and the research question, although these definitions should be set consistently within a study. It is vital that the column names in the data are explicitly labeled as `ep_start` and `ep_cont`, respectively. Raw data may be prepared using most spreadsheet software or text editors, but it should ultimately be saved as a comma-separated file (`.csv`).
+
+\begin{table}[H]
+\setlength{\tymin}{70pt}
+\let\raggedright\RaggedRight
+\begin{tabulary}{\textwidth}{@{}LLLL@{}}
+\toprule
+\textbf{ep\_start}      &        \textbf{ep\_cont}      \\ \midrule
+1 & NA \\
+NA & 3 \\
+NA & 2 \\
+4 & NA \\
+NA & 2 \\ \bottomrule
+\end{tabulary}
+\caption{Formatted talk-turn data ready for \pkg{discourseGT} analysis. In this example, an episode is defined arbitrarily as a topic (not shown) --- that is, each episode is a relevant discussion on a single topic. There are two episodes. The first episode is three talk-turns long, with Participant 1 initiating the episode. Participant 3 then spoke, followed by Participant 2. The second episode has two talk-turns, with Participant 4 starting a new episode and Participant 2 speaking next to complete the overall discussion. It is important to note that the duration of the conversation (in minutes) is not a part of the table. Rather, it should be recorded elsewhere for use in NGT analysis.}
+\label{table:example}
+\end{table}
+
+# Worked Case Example
+The \pkg{discourseGT} software package comes equipped with example data. Here, we will utilize these data to demonstrate its utility in examining discourse networks.
+
+To get started, install the software package through the Comprehensive \proglang{R} Archive Network (CRAN). Load it using:
+
+```{r tidy=TRUE,tidy.opts=list(width.cutoff=60)}
+library(discourseGT)
+```
+
+## Importing Data
+Raw data can be imported using the `read.csv()` function. For the sake of utilizing the example data, however, it is useful to duplicate it by assigning its values to a new variable. Once it has been duplicated, view the head of the data to ensure that it has been properly imported:
+
+```{r importdata, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+data <- sampleData1
+head(data)
+```
+
+## Preparing the igraph Object
+Prior to generating the \pkg{igraph} object, a weighted edge list needs to be generated from the imported raw data. By default, the weight of an edge is defined as the number of times an edge has occurred between two nodes. Weights can be redefined based on other available criteria, but this must be done manually.
+
+```{r tabedges, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+# Calculate the weighted edge list
+tabEdge <- tabulate_edges(data, iscsvfile = FALSE, silentNodes = 0)
+# Check the weighted edge list
+head(tabEdge$master)
+```
+
+Recall that an \pkg{igraph} object is the core input to many of the modular analytical functions offered in \pkg{discourseGT}. To generate an \pkg{igraph} object, the following information is required:
+
+  *	The variable that stores the weighted edge list
+  *	The title of the project. Default: `null`
+  *	Is the graph weighted? Default: `TRUE`
+
+```{r prepNet, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+prepNet <- prepareGraphs(tabEdge, 
+                         project_title = "Sample Data 1",
+                         weightedGraph = TRUE)
+```
+
+The graph settings specified by this function will influence the analytical output of downstream functions.
+
+## Running Graph Theory Analysis
+\pkg{discourseGT} offers graph theory-based analytics via two separate functions. The first, \newline`coreNetAnalysis()`, will perform core operations that produce the parameters previously detailed in Table \ref{table:gt_param} on page \pageref{table:gt_param}. It will count the number of nodes, and edges, calculate edge weights, average graph degree, modularity, centrality, and related graph theory parameters. To run the function and store it in a variable:
+
+```{r coreNet, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+coreNet <- coreNetAnalysis(prepNet)
+```
+
+The second, `subgroupsNetAnalysis()`, utilizes the Girvan-Newman algorithm to detect subgroups within the overall network [@Girvan_2002], such that:
+
+```{r subgroups, warnings = FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+subNet <- subgroupsNetAnalysis(prepNet, raw_input = data,
+                               normalized = TRUE)
+```
+
+## Generating Summaries
+While it is possible to display the generated \pkg{igraph} object, core network statistics, and subgroup statistics as separate outputs, it can be helpful to view them as an overall summary of a network's graph theory analytics. Furthermore, combining all of these outputs into a single variable is a necessary step in exporting them as a single text file. The `summaryNet()` function will combine the outputs from `prepareGraphs()`, `coreNetAnalysis()`, and \newline`subgroupsNetAnalysis()` as such:
+
+```{r summary, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+summaryData <- summaryNet(netintconfigData = prepNet, 
+                          coreNetAnalysisData = coreNet, 
+                          subgroupsNetAnalysisData = subNet, 
+                          display = TRUE)
+```
+
+## Basic Visualization
+\pkg{discourseGT} offers several methods to visualize networks. For a basic network graph, \newline`basicPlot()` should be used, and its parameters should be modified to suit the needs of the user. These options include modifications to the plotting algorithm, edge curvature, arrow size, and edge weight scaling.
+
+Its default plotting algorithm is Fruchterman Reingold, denoted by `0` [@Fruch-1991]. This is typically the best option to use because it attempts to minimize edge intersections in the final plot, improving readabiliy. Other projections include Kamada Kawai [@Kawai_1989] and Reingold Tilford [@Tilford_1981], denoted by `1` and `2`, respectively.
+
+Edge curvature defaults to `TRUE` so that differences in talk-turn taking between nodes can be distinguished. Consider two participants, represented as Node A and Node B. It is entirely possible for Node A to talk after Node B more than Node B talks after Node A. Consequently, the two edges that point in each direction will have different weights, and these can only be visually seen if they are curved instead of overlapping. On the other hand, graphs without curved edges may improve clarity. This can be especially favorable when plotting an unweighted graph.
+
+To modify arrow sizes, a multiplier can be passed to `arrowSizeMultiplier`. The default value is `1`. Any values <1.0 will shrink the arrow, and vice versa. Again, this feature is added to improve readability in specific cases.
+
+Lastly, edge weight scaling is best used for improved visualization of larger, weighted datasets. Due to the increase in raw edges, default plotting may yield unreadable results. We implemented Equation \ref{eq:7} to do so according to a linear scale. This method allows for users to visually compare talk-turn frequencies within a graph, which is not as intuitive with other forms of scaling.
+
+\begin{equation}\label{eq:7}
+\text{y} = \frac{\texttt{(scaledMax} - \texttt{scaledMin)}\cdot \text{(eachEdgeWeight} - \text{rawMin)}}{\text{rawMax} - \text{rawMin}} + \texttt{scaledMin}
+\end{equation}
+
+Here, each edge weight is individually scaled to a new value $y$. `scaledMax` and `scaledMin` are the user-defined boundaries of a new scale for all weighted edges. $rawMin$ and $rawMax$ are the minimum and maximum edge weights that are extracted from the raw data via the `prepareGraphs()` function. $eachEdgeWeight$ refers to the weight of each unique edge.
+
+For users, `scaledMax` must be greater than or equal to `scaledMin`. These variables may also be set to equal, non-zero values to produce an unweighted version of the graph.
+
+Note that while both `scaledMin` and `scaledMax` can theoretically be set to `0`, we advise against this because the resulting graph will appear to have no edges. Likewise, if `scaledMin` is set to `0` while `scaledMax` is a non-zero value, the resulting graph will appear to have no edges where the most infrequent talk-turns occurred. This may have some functionality depending on the user's use-case.
+
+Below is an example of a graph that uses the Fruchterman Reingold projection, linearly scales the dataset to new weighted edge boundaries of `[1, 10]`, and applies a scale of 2 to the arrow sizes.
+
+```{r baseplot, dpi = 300, fig.height = 7, fig.width = 7, warning = FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+basicPlot(prepNet, graph_selection_input = 0, curvedEdgeLines = TRUE,
+          arrowSizeMultiplier = 2, scaledEdgeLines = TRUE,
+          scaledMin = 1, scaledMax = 10)
+```
+
+In this plot, it can be easily seen that the fewest number of talk-turns relative to the entire discourse network occurred between Nodes 2 and 3 as well as Nodes 2 and 4. Nodes 1 and 2 shared the next fewest number of talk-turns, followed by Nodes 1 and 3 and Nodes 3 and 4. Nodes 1 and 4 shared the greatest number of talk-turns between them. In each of these node pairs, the conversation appeared to travel equally between the nodes involved, as the edges of similar thickness indicate. Note that we cannot view any attribute data about the nodes here.
+
+## Attribute Visualization
+To add attributes to a network graph, the `plot1Att()` and `plot2Att()` functions can be used. These functions utilize the `ggplot2` backend with `GGally` [@R-ggplot2, @R-GGally], giving them an appearance distinct from the previously discussed `basicPlot()` function.
+
+Before starting, ensure that a properly formatted `data.frame` with attributes is in the working environment. Displayed below is an example attribute dataset included with \pkg{discourseGT}:
+
+```{r importAtt, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+attData <- attributeData
+head(attData)
+```
+
+Note that the first column, `node`, contains each node name that was included in the initial imported data. This is a crucial aspect to the attribute data because it identifies attributes associated with particular nodes for `plot1Att()` and/or `plot2Att()`.
+
+Similarly to the `basicPlot()` function, the attribute plotting functions include options to modify the overall projection, albeit less granular. These include edge scaling, node sizes, and plotting algorithm.
+
+Edge weight scaling can be modified by changing the value of `prop`, and node sizes can be modified by changing the value of `attribute.nodesize`. Each of these have a default value of `20`, although this is arbitrary. The user should find the best settings that suit their use case.
+
+The default plotting algorithm is again Fruchterman Reingold for its readability [@Fruch-1991]. Here, however, this option is indicated by passing `fruchtermanreingold` into the function. Other projections can be found with `gplot.layout`.
+
+Lastly, it is important to note that only 1 or 2 attributes can be plotted at once. These cases should utilize the `plot1Att()` and `plot2Att()` functions, respectively.
+
+Below is an example of an attribute graph with larger-than-default edge sizes and smaller-than-default node sizes. It utilizes the Fruchterman Reingold projection.
+
+```{r plotNet1Attribute, dpi = 300, fig.height=8, fig.width=8, warning = FALSE}
+plot1Att(prepNet, 
+         prop = 40, 
+         graphmode = "fruchtermanreingold", 
+         attribute = attData$ethnicity, 
+         attribute.label = "Ethnicity",
+         attribute.node.labels = attData$node, 
+         attribute.nodesize = 16)
+```
+
+To plot a second attribute to a network, utilize `plot2Att()` with the aforementioned notation. The following graph showcases the network with both ethnic and gender data:
+
+```{r plotNet2Attributes, dpi = 300, fig.height=8, fig.width=8, warning = FALSE}
+plot2Att(prepNet, 
+         prop = 40, 
+         graphmode = "fruchtermanreingold",
+         attribute1 = attData$ethnicity, 
+         attribute2 = attData$gender,
+         attribute1.label = "Ethnicity",
+         attribute2.label = "Gender",
+         attribute.node.labels = attData$node,
+         attribute.nodesize = 16)
+```
+
+## Customizable Visualization
+Further graph customizability, such as node placements, can be achieved with \pkg{Cytoscape}, an open-source network plotting software [@Cytoscape]. In order to utilize this method:
+
+1. Download & install \pkg{Cytoscape}.
+2. Install `RCy3` [@R-rcy3] using the `BiocManager` package [@R-biocmanager].
+3. Plot the \pkg{igraph} object and modify it in \pkg{Cytoscape}.
+
+Assuming that \pkg{Cytoscape} is installed, install and load `RCy3` to properly link it to \proglang{R}. This can be done by:
+
+```{r installRCy3, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+install.packages("BiocManager")
+BiocManager::install("RCy3")
+library(RCy3)
+```
+
+To plot a graph, first ensure that a new \pkg{Cytoscape} session is loaded. Then, utilize the following command to send an \pkg{igraph} object to the GUI:
+
+```{r sendToCytoscape, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+createNetworkFromIgraph(prepNet$graph)
+```
+
+The graph will now appear in \pkg{Cytoscape}, where further modifications can be made.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=2]{maintext_files/figure-latex/cytoscape_updated.png}
+\end{figure}
+
+## Running Non-Graph Theory Analysis
+Recall that \pkg{discourseGT} does not require an \pkg{igraph} object to produce NGT analysis. Rather, `plotNGTData()` utilizes the raw, two column data to generate its output. Additionally, it requires the duration of the conversation (in minutes) and the number of silent nodes (i.e. participants who did not speak at all) in the discourse network. The function outputs the previously-discussed NGT parameters and three individual graphs. The raw data are also exported alongside the graphs, giving the user greater flexibility in creating their own NGT visualizations.
+
+```{r ngt_plotsdpi = 300, fig.height=6, fig.width=9, warning = FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plotNGTData(data = data, convoMinutes = 90,
+            iscsvfile = FALSE, silentNodes = 0)
+```
+
+## Exporting to Disk
+The `writeData()` function accepts specific \pkg{discourseGT} function output and exports it as a permanent file to a specified directory on the user's disk. It can save the generated summary object, any plots, and weighted edge lists. Images will automatically export as a `.tiff` at 300 DPI, and console output will be exported as a `.txt` file.
+
+The following example exports the generated summary to disk:
+
+```{r exportdata, eval=FALSE, warning = FALSE, results='hide'}
+writeData("Sample Data 1", summaryData, dirpath = tempdir())
+```
+
+# Discussion and Future Development
+This paper demonstrates the workflow of \pkg{discourseGT} and introduces basic elements of its underlying methodology and mathematics. Although graph theory parameters, visualization, and non-graph theory parameters relevant to educational contexts are covered, it is important to note some limitations of this package.
+
+Firstly, we use degree centrality as a way of describing node centrality. This is the simplest calculation of centrality and shows the number of direct and distinct talk-turn connections a node has to others in the network. However, this does not give a complete picture of a node's influence on a network because it only counts the number of distinct connections to other nodes, regardless of their weight. Therefore, this calculation should be interpreted in conjunction with betweenness centrality and other individual node statistics to provide a broader view of a specific node's influence on the discourse network.
+
+Secondly, talk-turns do not capture direct interactions between participants. Instead, they only represent the progression of the conversation to track dynamics of the discourse network. This was implemented because in discourse networks, participants can either address the entire group, a subgroup of the network, or another individual, and it is not feasible to distinguish these. Moreover, modeling direct interactions would result in a saturation of of edges in the network. This would not likely yield much useful information.
+
+Thirdly, talk-turns do not capture the quality or quantity of the conversation. In this context, quality refers to the words that are actually spoken, which may be on-or-off-topic. Quantity refers to the length of an interaction, which may be a few words or several sentences long. Our methodology models all talk-turns the same way, regardless of content or length. This was intentionally designed to complement existing methodologies in discourse analysis that typically focus on the content of the discussion [@Barros_2000].
+
+Fourthly, \pkg{discourseGT} relies on existing \proglang{R} packages and software for plotting. This construction restricts some meaningful functionality at the discretion of the underlying packages. For example, the attribute plotting functions, `plot1Att()` and `plot2Att()`, are built on the \pkg{ggplot2} [@R-ggplot2] \proglang{R} package. While this allows users to apply \pkg{ggplot2}'s [@R-ggplot2] advanced formatting functionality to their plots, it also prevents the edges from being curved. This is an important feature available in `basicPlot()`, which is built on the default \proglang{R} plotting backend, that visually distinguishes two edges of different weights that point in opposite directions between a pair of nodes. Consequently, some talk-turn information is lost under the thicker edge.
+
+Fifthly, this dependence on other \proglang{R} packages and software for plotting means that this functionality is susceptible to their version limitations. Most notably, our testing of \pkg{discourseGT} revealed that not all versions of \pkg{Cytoscape} [@Cytoscape] connected properly with the R environment. Only a specific version worked. Although we did not observe this behavior for other dependencies, our experience with \pkg{Cytoscape} [@Cytoscape] demonstrates that this could potentially affect some functionality.
+
+Sixthly, \pkg{discourseGT} does not currently support in-software manipulation of groups --- that is, the ability to separately analyze and visualize a subgroup of a larger group. As demonstrated in [@Wagner_2018], this functionality can be useful for discourse networks in educational contexts. At present, it is possible, albeit tedious, to run separate analyses of talk-turn data in the two-column format filtered to subgroups containing only the nodes of interest. Nevertheless, we hope that this current \proglang{R} package can help other researchers to more easily employ quantitative approaches to analyzing discourse networks to complement existing qualitative methodologies.
+
+# Computational Details
+The results in this paper were obtained using \proglang{R} 4.1.0 [@R-base] and packages \pkg{discourseGT} 1.1.7 [@R-discourseGT], \pkg{igraph} 1.2.6 [@R-igraph], \pkg{ggpubr} 0.4.0 [@R-ggpubr], \pkg{GGally} 2.1.2 [@R-GGally], \pkg{network} 1.17.1 [@R-networkpkg], \pkg{ggplot2} 3.3.5 [@R-ggplot2], \pkg{dplyr} 1.0.7 [@R-dplyr], \pkg{ggrepel} 0.9.1 [@R-ggrepel], \pkg{BiocManager} 1.30.16 [@R-biocmanager], and \pkg{sna} 2.6 [@R-sna]. These are all available from the Comprehensive \proglang{R} Archive Network (CRAN).
+
+For increased customizability of network visualizations, \pkg{RCy3} 2.12.4 [@R-rcy3] was obtained from BioConductor, and \pkg{Cytoscape} 3.8.2 [@Cytoscape] was used.
+
+# Acknowledgements
+We thank B. N. Nguyen and K. T. Ly for their contributions to the debugging process of \pkg{discourseGT}. We thank L. Hobbie for his input on several package functions and usability, and we thank S. Lam for her early testing of the package with example datasets. We are grateful for the support and work that CRAN Volunteers put into examining and publishing \proglang{R} packages on the Comprehensive \proglang{R} Archive Network. J. P. Le was an undergraduate researcher at the University of California San Diego.
+
+This material is based upon work supported by the National Science Foundation under Grant No. 2022975. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation. The authors declare that there are no conflicts of interest.
+
+<!---DO NOT ENTER REFERENCES MANUALLY. UPDATE THE REFERENCES.BIB FILE. R WILL ADD THE REFERENCES AT THE END OF THIS DOCUMENT --->
