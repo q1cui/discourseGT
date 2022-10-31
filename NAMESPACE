@@ -1,0 +1,7 @@
+#Export all functions
+exportPattern(.)
+importFrom("grDevices", "dev.copy", "dev.off", "pdf", "png")
+importFrom("graphics", "legend", "plot", "title")
+importFrom("stats", "aggregate", "setNames")
+importFrom("stats", "reorder")
+importFrom("utils", "packageVersion", "read.csv", "write.csv", "tail")
