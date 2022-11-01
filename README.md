@@ -16,4 +16,4 @@ Instructions on how to use the package can be found through the Repository Wiki.
 
 ## License
 This package is MIT Licensed  
-Written by Albert Chai <@albertchai>, Andrew Lee <@alee4738>, Joshua Le <@jpl038>, Jitarth Sheth <@jshethbright>, Qi Cui <q1cui@ucsd.edu>, and Stanley Lo <@smlo>
+Written by Albert Chai <@albertchai>, Andrew Lee <@alee4738>, Joshua Le <@jpl038>, Jitarth Sheth <@jshethbright>, Qi Cui <@q1cui>, and Stanley Lo <@smlo>
