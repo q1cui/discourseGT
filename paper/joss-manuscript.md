@@ -174,7 +174,8 @@ plotNGTData(data = data, convoMinutes = 90,
 ```
 
 # Conclusions
-We developed an R package ``discourseGT`` that considers student discourse as a network and quantitatively examines the dynamics of small-group discussions. This paper offers a step-by-step case example that contextualizes the workflow with educational data. Details about usage and more elaborate examples are hosted online at the Comprehensive R Archive Network (https://cran.rstudio.com/web/packages/discourseGT/index.html). 
+We developed an R package ``discourseGT`` that considers student discourse as a network and quantitatively examines the dynamics of small-group discussions. This paper offers a step-by-step case example that contextualizes the workflow with educational data. Details about usage and more elaborate examples are hosted online at the Comprehensive R Archive Network (https://cran.rstudio.com/web/packages/discourseGT/index.html), and the current version of the graphical user interface (GUI) is 1.1.0
+(https://sites.google.com/ucsd.edu/dgt/home).
 
 
 # Acknowledgements
