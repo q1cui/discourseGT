@@ -28,10 +28,10 @@ authors:
   - name: Katherine Ly
     orcid: 0000-0000-0000-0000
     affiliation: 1
-  - name: Qi Cui
+  - name: Stanley M. Lo
     orcid: 0000-0000-0000-0000
     affiliation: 1
-  - name: Stanley M. Lo
+  - name: Qi Cui
     orcid: 0000-0000-0000-0000
     affiliation: 1
 affiliations:
