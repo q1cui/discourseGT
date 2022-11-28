@@ -11,28 +11,23 @@ authors:
     orcid: 0000-0003-0872-7098
     affiliation: 1
   - name: Albert Chai
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0002-2340-7044
     affiliation: 1
-  - name: Andrew S. Lee
-    orcid: 0000-0000-0000-0000
+  - name: Andrew S. Lee Without ORCID
     affiliation: 2
-  - name: Jitarth Sheth
-    orcid: 0000-0000-0000-0000
+  - name: Jitarth Sheth Without ORCID
     affiliation: 1
-  - name: Kevin Banh
-    orcid: 0000-0000-0000-0000
+  - name: Kevin Banh Without ORCID
     affiliation: 1
-  - name: Priya Pahal
-    orcid: 0000-0000-0000-0000
+  - name: Priya Pahal Without ORCID
     affiliation: 1
-  - name: Katherine Ly
-    orcid: 0000-0000-0000-0000
+  - name: Katherine Ly Without ORCID
     affiliation: 1
   - name: Stanley M. Lo
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0003-3574-2197
     affiliation: 1
   - name: Qi Cui
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0002-3034-1143
     affiliation: 1
 affiliations:
  - name: 'University of California, San Diego'
