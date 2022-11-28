@@ -23,11 +23,13 @@ authors:
     affiliation: 1
   - name: Katherine Ly Without ORCID
     affiliation: 1
+  - name: Qi Cui
+    orcid: 0000-0002-3034-1143 
+    corresponding: true 
+    affiliation: 1
   - name: Stanley M. Lo
     orcid: 0000-0003-3574-2197
-    affiliation: 1
-  - name: Qi Cui
-    orcid: 0000-0002-3034-1143
+    corresponding: true 
     affiliation: 1
 affiliations:
  - name: 'University of California, San Diego'
