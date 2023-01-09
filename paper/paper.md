@@ -66,7 +66,7 @@ Student discussions in the classroom are important components of the learning pr
 
 # Statement of Need
 
-Many contemporary applications and software packages are optimized for large-scale networks. For example, ``igraph`` [@R-igraph], ``network`` [@R-networkpkg], and ``sna`` [@R-sna] were developed to analyze social media networks [@Jones_2017], epidemiological networks [@Christakis_2011], and political networks [@Hobbs_2016], respectively. In contrast, discourse networks in educational contexts are substantially smaller, typically with only 3-8 students [@Wagner_2018]. Consequently, certain parameters that are relevant for these larger networks are not necessarily applicable, and analysis of discourse networks demands additional parameters beyond what is available in graph theory [@Lou2001; @Chai_2019].
+Many contemporary applications and software packages are optimized for large-scale networks. For example, ``igraph`` [@R-igraph], ``network`` [@R-networkpkg], and ``sna`` [@R-sna] were developed to analyze social media networks [@Jones_2017], epidemiological networks [@Christakis_2011], and political networks [@Hobbs_2016], respectively. In contrast, discourse networks in educational contexts are substantially smaller, typically with only 3-8 students [@Wagner_2018]. Consequently, certain parameters that are relevant for these larger networks are not necessarily applicable, and analysis of discourse networks demands additional parameters beyond what is available in graph theory [@Lou_2001; @Chai_2019].
 
 # Usage
 ``discourseGT`` comes equipped with example data. We use this dataset to demonstrate the utility of ``discourseGT`` in examining discourse networks.
