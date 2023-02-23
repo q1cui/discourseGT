@@ -82,7 +82,7 @@ An ``igraph`` object is the core input to many of the modular analytical functio
 
 ```r
 # Calculate the weighted edge list
-tabEdge <- tabulate_edges(data, iscsvfile = FALSE, silentNodes = 0)
+tabEdge <- tabulate_edges(sampleData1, iscsvfile = FALSE, silentNodes = 0)
 # Check the weighted edge list
 head(tabEdge$master)
 ```
@@ -129,7 +129,7 @@ coreNet <- coreNetAnalysis(prepNet)
 
 ```r
 subNet <- subgroupsNetAnalysis(
-  prepNet, raw_input = data,
+  prepNet, raw_input = sampleData1,
   normalized = TRUE
 )
 ```
@@ -166,7 +166,7 @@ basicPlot(prepNet, graph_selection_input = 0, curvedEdgeLines = TRUE,
 
 
 ```r
-plotNGTData(data = data, convoMinutes = 90,
+plotNGTData(data = sampleData1, convoMinutes = 90,
             iscsvfile = FALSE, silentNodes = 0)
 ```
 
