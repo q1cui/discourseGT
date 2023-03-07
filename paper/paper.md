@@ -77,7 +77,7 @@ Many contemporary applications and software packages are optimized for large-sca
 
 ## Preparing an igraph Object
 
-An ``igraph`` object is the core input to many of the modular analytical functions offered in ``discourseGT``. Prior to generating an ``igraph`` object, a weighted edge list needs to be generated from imported raw data, structured as two columns containing sequential nodes or individual students who start or continue a discussion episode (Chai, Le, Lee, & Lo, 2019). This is addressed by the `tabulate_edges` function. By default, the weight of an edge is defined as the number of times an edge has occurred between two nodes. Weights can be redefined based on other available criteria, but this must be done manually. 
+An ``igraph`` object is the core input to many of the modular analytical functions offered in ``discourseGT``. Prior to generating an ``igraph`` object, a weighted edge list needs to be generated from imported raw data, structured as two columns containing sequential nodes or individual students who start or continue a discussion episode (@Chai_2019). This is addressed by the `tabulate_edges` function. By default, the weight of an edge is defined as the number of times an edge has occurred between two nodes. Weights can be redefined based on other available criteria, but this must be done manually. 
 
 
 ```r
@@ -100,7 +100,7 @@ head(tabEdge$master)
 Generation of an ``igraph`` object is handled by the `prepareGraphs` function, which requires the following information:
 
   *	The variable that stores the weighted edge list
-  *	The title of the project. Default: `null`
+  *	The title of the project. Default: `NULL`
   *	Is the graph weighted? Default: `TRUE`
 
 
