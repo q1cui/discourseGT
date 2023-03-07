@@ -81,6 +81,9 @@ An ``igraph`` object is the core input to many of the modular analytical functio
 
 
 ```r
+install.packages("discourseGT")
+library(discourseGT)
+data(sampleData1)
 # Calculate the weighted edge list
 tabEdge <- tabulate_edges(sampleData1, iscsvfile = FALSE, silentNodes = 0)
 # Check the weighted edge list
