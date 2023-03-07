@@ -102,7 +102,7 @@ plotNGTData <- function(data, convoMinutes, iscsvfile = TRUE, silentNodes = 0){
   #Create a histogram plot of lengths
   #View all color fill options through this command: RColorBrewer::display.brewer.all()
   #Color can be an option for the function, else go with the default of blue
-  eps_plot <- ggplot2::ggplot(eps_st, ggplot2::aes(x = reorder(eps_st$episode_length, 1:max), weight = eps_st$Freq)) + ggplot2::geom_bar(show.legend = FALSE) + ggplot2::xlab('Length of Episodes') + ggplot2::ylab('Frequency of Episodes') + ggplot2::theme(text = ggplot2::element_text(size=15), panel.background = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_line(colour="gray85", size=0.25), panel.grid.major = ggplot2::element_line(colour="gray85", size=0.25), axis.text.x = ggplot2::element_text(angle = 90, hjust = 1)) + ggplot2::scale_y_continuous(limits = c(0, NA))
+  eps_plot <- ggplot2::ggplot(eps_st, ggplot2::aes(x = reorder(episode_length, 1:max), weight = Freq)) + ggplot2::geom_bar(show.legend = FALSE) + ggplot2::xlab('Length of Episodes') + ggplot2::ylab('Frequency of Episodes') + ggplot2::theme(text = ggplot2::element_text(size=15), panel.background = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_line(colour="gray85", size=0.25), panel.grid.major = ggplot2::element_line(colour="gray85", size=0.25), axis.text.x = ggplot2::element_text(angle = 90, hjust = 1)) + ggplot2::scale_y_continuous(limits = c(0, NA))
   #Displays the plot to memory
   #print(eps_plot)
 
@@ -264,7 +264,7 @@ plotNGTData <- function(data, convoMinutes, iscsvfile = TRUE, silentNodes = 0){
   count_master$ep_conts_hour <- count_master$ep_cont/timeHours
 
   #Create plot for questions per hour versus responses per hour from data frame object
-  qvr_plot <- ggplot2::ggplot(count_master, ggplot2::aes(x=count_master$ep_starts_hour, y = count_master$ep_conts_hour, label = count_master$participant)) + ggplot2::geom_point(na.rm = TRUE) + ggplot2::xlab('Episode Starts per hour') + ggplot2::ylab('Episode Continuations per hour') + ggrepel::geom_label_repel() + ggplot2::theme(text = ggplot2::element_text(size=15), panel.background = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_line(colour="gray85", size=0.25), panel.grid.major = ggplot2::element_line(colour="gray85", size=0.25)) + ggplot2::scale_y_continuous(limits = c(0, NA)) + ggplot2::scale_x_continuous(limits = c(0, NA))
+  qvr_plot <- ggplot2::ggplot(count_master, ggplot2::aes(x=ep_starts_hour, y = ep_conts_hour, label = participant)) + ggplot2::geom_point(na.rm = TRUE) + ggplot2::xlab('Episode Starts per hour') + ggplot2::ylab('Episode Continuations per hour') + ggrepel::geom_label_repel() + ggplot2::theme(text = ggplot2::element_text(size=15), panel.background = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_line(colour="gray85", size=0.25), panel.grid.major = ggplot2::element_line(colour="gray85", size=0.25)) + ggplot2::scale_y_continuous(limits = c(0, NA)) + ggplot2::scale_x_continuous(limits = c(0, NA))
   #Displays the plot to memory
   #print(qvr_plot)
 
@@ -312,7 +312,7 @@ plotNGTData <- function(data, convoMinutes, iscsvfile = TRUE, silentNodes = 0){
   #Third, create the grouping for the line attribute for ggplot
   temp_plot$group <- 1
   #Fourth, create a plot based on the sorted data
-  ntr_plot <- ggplot2::ggplot(temp_plot, ggplot2::aes(x = temp_plot$participant, y = temp_plot$normalized_turn_ratio, group = temp_plot$group, color = temp_plot$group)) + ggplot2::geom_point(show.legend = FALSE) + ggplot2::geom_line(show.legend = FALSE) + ggplot2::theme(text = ggplot2::element_text(size=15), panel.background = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_line(colour="gray85", size=0.25), panel.grid.major = ggplot2::element_line(colour="gray85", size=0.25)) + ggplot2::xlab('Participants') + ggplot2::ylab('Normalized Turn Ratio') + ggplot2::scale_y_continuous(limits = c(0, NA))
+  ntr_plot <- ggplot2::ggplot(temp_plot, ggplot2::aes(x = participant, y = normalized_turn_ratio, group = group, color = group)) + ggplot2::geom_point(show.legend = FALSE) + ggplot2::geom_line(show.legend = FALSE) + ggplot2::theme(text = ggplot2::element_text(size=15), panel.background = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_line(colour="gray85", size=0.25), panel.grid.major = ggplot2::element_line(colour="gray85", size=0.25)) + ggplot2::xlab('Participants') + ggplot2::ylab('Normalized Turn Ratio') + ggplot2::scale_y_continuous(limits = c(0, NA))
   #Displays the plot to memory
   #print(ntr_plot)
 
