@@ -14,6 +14,16 @@ To get started installing the package, run the command `install.packages('discou
 ## How to Use
 Instructions on how to use the package can be found through the Repository Wiki.
 
+## How to reach out?
+### Where do I report bugs?
+Simply open an issue on GitHub.
+
+### How do I contribute to the package?
+If you have an idea (but no code yet), open an issue on GitHub. If you want to contribute with a specific feature and have the code ready, fork the repository, add your code, and create a pull request.
+
+### Do you need support?
+The easiest way is to open an issue - this way, your question is also visible to others who may face similar problems.
+
 ## License
 This package is MIT Licensed  
 Written by Albert Chai <@albertchai>, Andrew Lee <@alee4738>, Joshua Le <@jpl038>, Jitarth Sheth <@jshethbright>, Qi Cui <@q1cui>, and Stanley Lo <@smlo>
