@@ -3,39 +3,10 @@ title:
   formatted:  "\\pkg{discourseGT}: An \\proglang{R} package to analyze discourse networks in educational contexts"
   plain:     "discourseGT: An R package to analyze discourse networks in educational contexts"
   short:     "\\pkg{discourseGT}: An \\proglang{R} package to analyze educational discourse networks"
-documentclass: jss
-citation_package: natbib
-output: rticles::jss_article
-classoption: nojss
-bibliography: references.bib
-bibliography_style: plainnat
 vignette: >
   %\VignetteIndexEntry{discourseGT}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-author: 
-  - name: Joshua P. Le
-    affiliation: 'University of California `\\`{=latex} San Diego'
-  - name: Albert Chai
-    affiliation: 'University of California `\\`{=latex} San Diego \AND'
-  - name: Andrew S. Lee
-    affiliation: 'University of California `\\`{=latex} Los Angeles'
-  - name: Kevin Banh
-    affiliation: 'University of California `\\`{=latex} San Diego \AND'
-  - name: Priya Pahal
-    affiliation: 'University of California `\\`{=latex} San Diego'
-  - name: Stanley M. Lo
-    affiliation: 'University of California `\\`{=latex} San Diego'
-    address: >
-      9500 Gilman Dr #0355
-      La Jolla, CA 92093-0355
-    email: \email{smlo@ucsd.edu}
-abstract: >
-  Student collaborations and discussions in the classroom are important components of the learning process. Current methods for analyzing discourse in these educational contexts are predominantly qualitative. To complement the existing methodologies in education research, \pkg{discourseGT} is an \proglang{R} package that adapts graph theory and social network analysis to analyze conversation patterns when students collaborate in small groups. Ths software package takes data on the sequential student talk-turns in a classroom discussion and produces statistics and plots based on both graph theory and other non-graph theory parameters. Overall, these new features in \pkg{discourseGT} can provide insight on the dynamics of student discussions relevant to education researchers.
-
-keywords: 
-  formatted:  [student group work, discourse network, graph theory, "\\pkg{discourseGT}", "\\proglang{R}"]
-  plain:      [student group work, discourse network, graph theory, discourseGT, R]
 preamble: >
   \usepackage{longtable}
   \usepackage{makecell}
@@ -57,20 +28,6 @@ graphics: yes
 ```{r, include = FALSE}
 options(prompt = "R> ", continue = "+ ", width = 70, useFancyQuotes = FALSE)
 ```
-
-# Introduction
-Vygotsky postulated that social interactions are crucial to individual learning and cognitive development [@Vygotsky_1978]. Subsequent studies in education research have found that small-group discussions can help students develop disciplinary understanding [@Freeman_2014] and enhance skills in problem solving [@Heller_1992], critical thinking [@Webb_1982b, @Gokhale_1995, @Bligh_2000], communication [@Webb_1994], and metacognition [@Webb_2003, @Veenman_2006, @Bromme_2010]. Furthermore, small-group discussions can also improve student interest and motivation [@Skinner_1993, @Ryan_2000] as well as course completion rates and persistence in science, technology, engineering, and mathematics (STEM) majors [@Tinto_1997, @Freeman_2014, @Loes_2017].
-
-Small-group discussions are typically studied using discourse analysis or other similar qualitative methodologies. Discourse analysis examines the content of a discussion and considers how and why certain actions occur [@Gee_2011, @Dunn_2016]. In education research, discourse analysis has been used to study student cognition [@King_1994, @Fall_2000, @Sfard_2001, @Anderson_2001, @Kittleson_2004, @Webb_2006, @Molenaar_2017], scientific argumentation [@Chiu_2008a, @Chiu_2008b, @Soter_2008] collaboration [@Sfard_Kieran_2001, @Webb_2002, @Empson_2003, @Wells_2006, @Premo_2018], classroom dynamics [@Nystrand_2003, @White_2003, @Ikpeze_2007], and student identity in STEM [@Brown_2005, @Bishop_2012, @Wood_2013, @Kumpulainen_2017]. Most of these methodologies focus on the moment-to-moment discourse with in-depth qualitative analyses but do not follow how a discussion progresses from person to person over time in a quantifiable manner.
-
-To complement these existing methodologies, we have developed a process that considers student discourse as a network (a "discourse network") and quantitatively examines the dynamics of small-group discussions using graph theory and network analysis [@Chai_2019, @Liyanage_2021]. Many contemporary applications and software packages are optimized for large-scale networks. For example, \pkg{igraph} [@R-igraph], \pkg{network} [@R-networkpkg], and \pkg{sna} [@R-sna] were developed to analyze social media networks [@Jones_2017], epidemiological networks [@Christakis_2011], and political networks [@Hobbs_2016], respectively. In contrast, discourse networks in educational contexts are substantially smaller, typically with only 3-8 students [@Wagner_2018]. Consequently, certain parameters that are relevant for these larger networks are not necessarily applicable, and analysis of discourse networks further demands additional parameters beyond what is available in graph theory [@Chai_2019, @Lou_2001].
-
-We have decided to develop our software package with the \proglang{R} programming language [@R-base] because of its open-source nature and extensibility of packages. Instead of rebuilding every component from the beginning, we use existing network analysis software packages, including \pkg{igraph} [@R-igraph], \pkg{ggpubr} [@R-ggpubr], \pkg{GGally} [@R-GGally], \pkg{network} [@R-networkpkg], \pkg{ggplot2} [@R-ggplot2], \pkg{dplyr} [@R-dplyr], \pkg{ggrepel} [@R-ggrepel], and \pkg{sna} [@R-sna], as well as other relevant software packages such as \pkg{BiocManager} [@R-biocmanager] and \pkg{RCy3} [@R-rcy3] in \proglang{R}, and \pkg{Cytoscape} [@Cytoscape]. At the time of writing, the current version of the package is 1.1.7 (\url{https://CRAN.R-project.org/package=discourseGT}) [@R-discourseGT], and the current version of the graphical user interface (GUI) is 1.1.0 (\url{https://sites.google.com/ucsd.edu/dgt/home}).
-
-This paper is organized into five additional sections beyond the Introduction. Section 2 describes important background information including an operationalized definition of discourse networks with relevant graph theory parameters and other non-graph theory parameters. Section 3 outlines the general workflow of \pkg{discourseGT}. Section 4 offers a step-by-step case example that contextualizes the workflow with sample data. Section 5 examines the potential limitations and future developments of \pkg{discourseGT}. Section 6 provides information on the software package and dependency versions used to generate the results in this paper. Section 7 acknowledges other contributors to the development and distribution of this software package.
-
-# Background
-In any network, there exist nodes with edges connecting them [@Godsil_2001]. The precise meaning for these nodes and edges can change depending on the context of the network. Discourse networks require relational data that join two participants in a discussion with some kind of discourse connection [@Wagner_2018]. In our \pkg{discourseGT}, we track the sequential order of students who speak in a small-group discussion [@Chai_2019]. Nodes represent members of the group, which are students and can also sometimes include peer facilitators, teaching assistants, and/or the instructor of a course. Edges represent talk-turns or the progression of different individuals speaking. A directed edge pointing from Node A to Node B indicates that Participant B spoke after Participant A. This directionality does not necessarily indicate that Participant A talked directly to Participant B, as all members of the group likely listened to the conversation. Instead, edges could be interpreted in a few different ways. Beyond tracking the sequential order of talk-turns, edges may indicate who is willing to speak after others, who contributes ideas that could be expanded upon or responded to, and/or who has the agency or power at the moment to speak in the group [@Chai_2019].
 
 ## Graph Theory Parameters
 In our previous work [@Chai_2019, @Liyanage_2021], we identified a subset of graph theory parameters that are relevant to small-group discussions in educational contexts as shown in Table \ref{table:gt_param}.
@@ -380,30 +337,3 @@ The following example exports the generated summary to disk:
 ```{r exportdata, eval=FALSE, warning = FALSE, results='hide'}
 writeData("Sample Data 1", summaryData, dirpath = tempdir())
 ```
-
-# Discussion and Future Development
-This paper demonstrates the workflow of \pkg{discourseGT} and introduces basic elements of its underlying methodology and mathematics. Although graph theory parameters, visualization, and non-graph theory parameters relevant to educational contexts are covered, it is important to note some limitations of this package.
-
-Firstly, we use degree centrality as a way of describing node centrality. This is the simplest calculation of centrality and shows the number of direct and distinct talk-turn connections a node has to others in the network. However, this does not give a complete picture of a node's influence on a network because it only counts the number of distinct connections to other nodes, regardless of their weight. Therefore, this calculation should be interpreted in conjunction with betweenness centrality and other individual node statistics to provide a broader view of a specific node's influence on the discourse network.
-
-Secondly, talk-turns do not capture direct interactions between participants. Instead, they only represent the progression of the conversation to track dynamics of the discourse network. This was implemented because in discourse networks, participants can either address the entire group, a subgroup of the network, or another individual, and it is not feasible to distinguish these. Moreover, modeling direct interactions would result in a saturation of of edges in the network. This would not likely yield much useful information.
-
-Thirdly, talk-turns do not capture the quality or quantity of the conversation. In this context, quality refers to the words that are actually spoken, which may be on-or-off-topic. Quantity refers to the length of an interaction, which may be a few words or several sentences long. Our methodology models all talk-turns the same way, regardless of content or length. This was intentionally designed to complement existing methodologies in discourse analysis that typically focus on the content of the discussion [@Barros_2000].
-
-Fourthly, \pkg{discourseGT} relies on existing \proglang{R} packages and software for plotting. This construction restricts some meaningful functionality at the discretion of the underlying packages. For example, the attribute plotting functions, `plot1Att()` and `plot2Att()`, are built on the \pkg{ggplot2} [@R-ggplot2] \proglang{R} package. While this allows users to apply \pkg{ggplot2}'s [@R-ggplot2] advanced formatting functionality to their plots, it also prevents the edges from being curved. This is an important feature available in `basicPlot()`, which is built on the default \proglang{R} plotting backend, that visually distinguishes two edges of different weights that point in opposite directions between a pair of nodes. Consequently, some talk-turn information is lost under the thicker edge.
-
-Fifthly, this dependence on other \proglang{R} packages and software for plotting means that this functionality is susceptible to their version limitations. Most notably, our testing of \pkg{discourseGT} revealed that not all versions of \pkg{Cytoscape} [@Cytoscape] connected properly with the R environment. Only a specific version worked. Although we did not observe this behavior for other dependencies, our experience with \pkg{Cytoscape} [@Cytoscape] demonstrates that this could potentially affect some functionality.
-
-Sixthly, \pkg{discourseGT} does not currently support in-software manipulation of groups --- that is, the ability to separately analyze and visualize a subgroup of a larger group. As demonstrated in [@Wagner_2018], this functionality can be useful for discourse networks in educational contexts. At present, it is possible, albeit tedious, to run separate analyses of talk-turn data in the two-column format filtered to subgroups containing only the nodes of interest. Nevertheless, we hope that this current \proglang{R} package can help other researchers to more easily employ quantitative approaches to analyzing discourse networks to complement existing qualitative methodologies.
-
-# Computational Details
-The results in this paper were obtained using \proglang{R} 4.1.0 [@R-base] and packages \pkg{discourseGT} 1.1.7 [@R-discourseGT], \pkg{igraph} 1.2.6 [@R-igraph], \pkg{ggpubr} 0.4.0 [@R-ggpubr], \pkg{GGally} 2.1.2 [@R-GGally], \pkg{network} 1.17.1 [@R-networkpkg], \pkg{ggplot2} 3.3.5 [@R-ggplot2], \pkg{dplyr} 1.0.7 [@R-dplyr], \pkg{ggrepel} 0.9.1 [@R-ggrepel], \pkg{BiocManager} 1.30.16 [@R-biocmanager], and \pkg{sna} 2.6 [@R-sna]. These are all available from the Comprehensive \proglang{R} Archive Network (CRAN).
-
-For increased customizability of network visualizations, \pkg{RCy3} 2.12.4 [@R-rcy3] was obtained from BioConductor, and \pkg{Cytoscape} 3.8.2 [@Cytoscape] was used.
-
-# Acknowledgements
-We thank B. N. Nguyen and K. T. Ly for their contributions to the debugging process of \pkg{discourseGT}. We thank L. Hobbie for his input on several package functions and usability, and we thank S. Lam for her early testing of the package with example datasets. We are grateful for the support and work that CRAN Volunteers put into examining and publishing \proglang{R} packages on the Comprehensive \proglang{R} Archive Network. J. P. Le was an undergraduate researcher at the University of California San Diego.
-
-This material is based upon work supported by the National Science Foundation under Grant No. 2022975. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation. The authors declare that there are no conflicts of interest.
-
-<!---DO NOT ENTER REFERENCES MANUALLY. UPDATE THE REFERENCES.BIB FILE. R WILL ADD THE REFERENCES AT THE END OF THIS DOCUMENT --->
