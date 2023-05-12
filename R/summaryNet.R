@@ -106,38 +106,6 @@ summaryNet <- function(netintconfigData = NULL, coreNetAnalysisData = NULL,
           cat("\n")
           cat('\n')
           }
-        cat("---------DISCLAIMER AND WARRANTY OF PROVIDED RESULTS AND CODE---------\n")
-        cat('Results from Code: \n')
-        cat({"The researcher(s) are primary responsible for the
-        interpretation of the results presented here with the script.
-        The authors accept no liability for any errors that
-        may result in the processing or the interpretation of
-        your results. However, if you do encounter errors in
-        the package that should not have happened, please let us
-        know\n"})
-        cat('\n')
-        cat('Code Warranty: \n')
-        cat("MIT License\n")
-        cat("Copyright (c) 2021 Albert Chai, Andrew S. Lee, Joshua P. Le, and Stanley M. Lo\n")
-        cat("\n")
-        cat({"Permission is hereby granted, free of charge, to any person obtaining
-        a copy of this software and associated documentation files
-        (the 'Software'), to deal in the Software without restriction,
-        including without limitation the rights to use, copy, modify,
-        merge, publish, distribute, sublicense, and/or sell copies of
-        the Software, and to permit persons to whom the Software is
-        furnished to do so, subject to the following conditions: \n"})
-        cat("\n")
-        cat({"The above copyright notice and this permission notice shall be
-        included in all copies or substantial portions of the Software.\n"})
-        cat("\n")
-        cat({"THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
-        IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
-        ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
-        CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-        WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n"})
         cat({"================== END SUMMARY ==================\n"})
 
         # Return objects
