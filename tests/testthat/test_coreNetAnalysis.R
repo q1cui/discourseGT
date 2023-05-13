@@ -3,7 +3,6 @@ library(testthat)
 library(igraph)
 
 # Define test data
-# Please replace this with your actual data
 raw_data_input <- data.frame(
   source = c("Node1", "Node2", "Node3"),
   target = c("Node2", "Node3", "Node1"),
