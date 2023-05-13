@@ -43,4 +43,3 @@ test_that("coreNetAnalysis correctly calculates density", {
   expect_equal(result$net.density, edge_density(ginp$graph, loops = FALSE))
 })
 
-# And so on for the other calculations in the function...
