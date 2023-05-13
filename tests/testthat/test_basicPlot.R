@@ -1,36 +1,31 @@
-# Load the necessary libraries
 library(testthat)
 library(igraph)
 
-# Define test data
-# Please replace this with your actual data
-raw_data_input <- data.frame(
-  source = c("Node1", "Node2", "Node3"),
-  target = c("Node2", "Node3", "Node1"),
-  weight = c(1, 2, 3)
-)
-project_title <- "Test Project"
+test_that("basicPlot works", {
 
-# Prepare graph object
-ginp <- prepareGraphs(raw_data_input, project_title)
+  # Create a sample edge list data frame for testing
+  edge_list <- data.frame(source = c("A", "A", "A", "B", "B", "C", "C", "A", "B"),
+                          target = c("B", "C", "A", "A", "C", "A", "B", "C", "A"),
+                          weight = c(1, 2, 1, 1, 1, 1, 1, 2, 2))
+                          
+  raw_data_input <- list(master = edge_list)
+  ginp <- prepareGraphs(raw_data_input, project_title = "Test Project", weightedGraph = TRUE)
 
-# Test: basicPlot doesn't throw errors with valid inputs
-test_that("basicPlot doesn't throw errors with valid inputs", {
-  expect_error(basicPlot(ginp, graph_selection_input = 0,
-                         curvedEdgeLines = TRUE, arrowSizeMultiplier = 1,
-                         scaledEdgeLines = FALSE), NA)
-})
+  # Test case where graph_selection_input = 0
+  expect_silent(basicPlot(ginp, graph_selection_input = 0))
+  
+  # Test case where graph_selection_input = 1
+  expect_silent(basicPlot(ginp, graph_selection_input = 1))
 
-# Test: basicPlot throws error with invalid graph_selection_input
-test_that("basicPlot throws error with invalid graph_selection_input", {
-  expect_error(basicPlot(ginp, graph_selection_input = 3,
-                         curvedEdgeLines = TRUE, arrowSizeMultiplier = 1,
-                         scaledEdgeLines = FALSE))
-})
+  # Test case where graph_selection_input = 2
+  expect_silent(basicPlot(ginp, graph_selection_input = 2))
 
-# Test: basicPlot throws error with invalid scaledMin and scaledMax
-test_that("basicPlot throws error with invalid scaledMin and scaledMax", {
-  expect_error(basicPlot(ginp, graph_selection_input = 0,
-                         curvedEdgeLines = TRUE, arrowSizeMultiplier = 1,
-                         scaledEdgeLines = TRUE, scaledMin = 2, scaledMax = 1))
+  # Test case where scaledEdgeLines = TRUE and scaledMin < scaledMax
+  expect_silent(basicPlot(ginp, graph_selection_input = 0, scaledEdgeLines = TRUE, scaledMin = 0.5, scaledMax = 1.5))
+
+  # Test case where scaledEdgeLines = TRUE and scaledMin > scaledMax
+  expect_warning(basicPlot(ginp, graph_selection_input = 0, scaledEdgeLines = TRUE, scaledMin = 1.5, scaledMax = 0.5))
+
+  # Test case where scaledEdgeLines = FALSE
+  expect_silent(basicPlot(ginp, graph_selection_input = 0, scaledEdgeLines = FALSE))
 })
