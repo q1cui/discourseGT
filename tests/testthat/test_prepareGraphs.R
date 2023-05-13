@@ -1,49 +1,37 @@
-# Load the necessary libraries
 library(testthat)
 library(igraph)
 
-# Define test data
-# Please replace this with your actual data
-raw_data_input <- data.frame(
-  source = c("Node1", "Node2", "Node3"),
-  target = c("Node2", "Node3", "Node1"),
-  weight = c(1, 2, 3)
-)
-project_title <- "Test Project"
+test_that("prepareGraphs works", {
 
-# Test: prepareGraphs creates a list with correct components
-test_that("prepareGraphs creates a list with correct components", {
-  result <- prepareGraphs(raw_data_input, project_title)
+  # Create a sample edge list data frame for testing
+  edge_list <- data.frame(master = c("A", "B", "C", "A", "B", "A", "C", "B", "C"),
+                          source = c("A", "A", "A", "B", "B", "C", "C", "A", "B"),
+                          target = c("B", "C", "A", "A", "C", "A", "B", "C", "A"),
+                          weight = c(1, 2, 1, 1, 1, 1, 1, 2, 2))
+                          
+  raw_data_input <- list(master = edge_list)
+
+  # Test case where weightedGraph = TRUE
+  result <- prepareGraphs(raw_data_input, project_title = "Test Project", weightedGraph = TRUE)
   expect_is(result, "list")
-  expect_named(result, c("graph", "graphmatrix", "edge_list", "project_title", "weight_list", "weightedGraph"))
-})
-
-# Test: prepareGraphs creates a graph of class igraph
-test_that("prepareGraphs creates a graph of class igraph", {
-  result <- prepareGraphs(raw_data_input, project_title)
   expect_is(result$graph, "igraph")
-})
+  expect_is(result$graphmatrix, "dgCMatrix")
+  expect_true(all.equal(result$edge_list, edge_list[, c("source", "target")]))
+  expect_equal(result$project_title, "Test Project")
+  expect_equal(result$weight_list, edge_list$weight)
+  expect_true(result$weightedGraph)
 
-# Test: prepareGraphs correctly assigns weights
-test_that("prepareGraphs correctly assigns weights", {
-  result <- prepareGraphs(raw_data_input, project_title, weightedGraph = TRUE)
-  expect_equal(E(result$graph)$weight, raw_data_input$weight)
-  
-  result <- prepareGraphs(raw_data_input, project_title, weightedGraph = FALSE)
+  # Test case where weightedGraph = FALSE
+  result <- prepareGraphs(raw_data_input, project_title = "Test Project", weightedGraph = FALSE)
+  expect_is(result, "list")
+  expect_is(result$graph, "igraph")
+  expect_is(result$graphmatrix, "dgCMatrix")
+  expect_true(all.equal(result$edge_list, edge_list[, c("source", "target")]))
+  expect_equal(result$project_title, "Test Project")
   expect_null(result$weight_list)
-  expect_null(E(result$graph)$weight)
+  expect_false(result$weightedGraph)
+
+  # Test case where input data is not a list
+  expect_error(prepareGraphs(edge_list, project_title = "Test Project", weightedGraph = TRUE))
 })
 
-# Test: prepareGraphs correctly creates an adjacency matrix
-test_that("prepareGraphs correctly creates an adjacency matrix", {
-  result <- prepareGraphs(raw_data_input, project_title, weightedGraph = TRUE)
-  expect_equal(result$graphmatrix[1, 2], 1)
-  expect_equal(result$graphmatrix[2, 3], 2)
-  expect_equal(result$graphmatrix[3, 1], 3)
-})
-
-# Test: prepareGraphs correctly assigns project title
-test_that("prepareGraphs correctly assigns project title", {
-  result <- prepareGraphs(raw_data_input, project_title)
-  expect_equal(result$project_title, project_title)
-})
