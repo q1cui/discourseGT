@@ -4,8 +4,7 @@ library(igraph)
 test_that("prepareGraphs works", {
 
   # Create a sample edge list data frame for testing
-  edge_list <- data.frame(master = c("A", "B", "C", "A", "B", "A", "C", "B", "C"),
-                          source = c("A", "A", "A", "B", "B", "C", "C", "A", "B"),
+  edge_list <- data.frame(source = c("A", "A", "A", "B", "B", "C", "C", "A", "B"),
                           target = c("B", "C", "A", "A", "C", "A", "B", "C", "A"),
                           weight = c(1, 2, 1, 1, 1, 1, 1, 2, 2))
                           
