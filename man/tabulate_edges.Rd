@@ -4,12 +4,10 @@
 \alias{tabulate_edges}
 \title{Process raw order lists from two column format to edge and weight lists}
 \usage{
-tabulate_edges(input, iscsvfile = TRUE, silentNodes = 0)
+tabulate_edges(input, silentNodes = 0)
 }
 \arguments{
 \item{input}{Input in question-and-response format. Must be a data.frame or file name of a .csv}
-
-\item{iscsvfile}{Sets if the input is a csv file or a R data frame object}
 
 \item{silentNodes}{The number of nodes that do not interact with other nodes but are in the group}
 }
@@ -21,6 +19,6 @@ Takes raw input that is in a 2 column format/question-and-response format and ge
 }
 \examples{
 df <- sampleData1
-tabData <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+tabData <- tabulate_edges(df,  silentNodes = 0)
 
 }

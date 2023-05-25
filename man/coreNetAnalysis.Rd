@@ -17,7 +17,7 @@ Analyzes the graphs with the core parameters, such as number of edges and nodes,
 }
 \examples{
 df <- sampleData1
-prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+prepNet <- tabulate_edges(df, silentNodes = 0)
 baseNet <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 
 coreNetAnalysis(baseNet)

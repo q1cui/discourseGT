@@ -4,14 +4,12 @@
 \alias{plotNGTData}
 \title{Plot non-graphical parameters}
 \usage{
-plotNGTData(data, convoMinutes, iscsvfile = TRUE, silentNodes = 0)
+plotNGTData(data, convoMinutes, silentNodes = 0)
 }
 \arguments{
 \item{data}{Original raw input data in ordered question/response 2 column format}
 
 \item{convoMinutes}{Time length of the conversation in the graph in minutes}
-
-\item{iscsvfile}{Sets if the input data file to function is a .csv file or a R data frame object}
 
 \item{silentNodes}{The number of nodes that do not interact with other nodes but are in the group}
 }
@@ -23,5 +21,5 @@ Creates plots for non-graph theory parameters for episode lengths, questions per
 }
 \examples{
 df <- sampleData1
-plotNGTData(df, convoMinutes = 60, iscsvfile = FALSE, silentNodes = 0)
+plotNGTData(df, convoMinutes = 60, silentNodes = 0)
 }

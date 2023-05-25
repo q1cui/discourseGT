@@ -8,17 +8,36 @@
 #' Takes raw input that is in a 2 column format/question-and-response format and generates an appropriate edge lists in a combined .csv file.
 #'
 #' @param input_file Source of the raw input file. Must be in a .csv format
-#' @param iscsvfile Sets if the input_file is a csv file or a R data frame object
 #' @return Saves the weight and edge lists as a data.frame object or a .csv file to disk.
+#' @export
 #' @examples
 #' df <- sampleData1
-#' prepNet <- edgelist_raw(df, iscsvfile = FALSE)
+#' prepNet <- edgelist_raw(df)
 #'
 
-edgelist_raw <- function(input_file, iscsvfile = TRUE){
+edgelist_raw <- function(input_file) UseMethod("edgelist_raw")
 
-  # read input file into data frame
-  ifelse(iscsvfile == TRUE, df <- read.csv(input_file), df <- input_file)
+#' @export
+edgelist_raw.default <- function(input_file) {
+  stop_txt = "Invalid input type. \nPlease input file path as character or input data.frame directly."
+  stop(stop_txt, call. = FALSE)
+}
+
+#' @export
+edgelist_raw.character <- function(input_file) {
+  if(!file.exists(input_file)) {
+    stop ("FILE NOT FOUND!", call. = FALSE)
+  } else {
+    df <- read.csv(input_file)
+    edgelist_raw(df)
+  }
+}
+
+#' @export
+edgelist_raw.data.frame <- function(input_file){
+
+  # assign data.frame "df" from "input_file"
+  df <- input_file
 
   # Turn two column input into a single column.
   # Assumes there was an NA value in each row

@@ -8,18 +8,34 @@
 #' Takes raw input that is in a 2 column format/question-and-response format and generates an appropriate edge and weight lists in a combined .csv file. The weights in this function are determined by the number of occurrences a specific edge has occurred in the graph
 #'
 #' @param input Input in question-and-response format. Must be a data.frame or file name of a .csv
-#' @param iscsvfile Sets if the input is a csv file or a R data frame object
 #' @param silentNodes The number of nodes that do not interact with other nodes but are in the group
 #' @return Saves the weight and edge lists as a data.frame object or a .csv file to disk.
+#' @export
 #' @examples
 #' df <- sampleData1
-#' tabData <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+#' tabData <- tabulate_edges(df,  silentNodes = 0)
 #'
 
-tabulate_edges <- function(input, iscsvfile = TRUE, silentNodes = 0){
+tabulate_edges <- function(input, silentNodes = 0) UseMethod("tabulate_edges")
 
-  # read input file into data frame
-  ifelse(iscsvfile == TRUE, df <- read.csv(input), df <- input)
+#' @export
+tabulate_edges.default <- function(input, silentNodes = 0) stop_txt()
+
+#' @export
+tabulate_edges.character <- function(input, silentNodes = 0) {
+  if(!file.exists(input)) {
+    stop ("FILE NOT FOUND!", call. = FALSE)
+  } else {
+    df <- read.csv(input)
+    tabulate_edges(df, silentNodes)
+  }
+}
+
+#' @export
+tabulate_edges.data.frame <- function(input, silentNodes = 0){
+
+  # assign data.frame "df" from "input_file"
+  df <- input
 
   # Turn two column input into a single column.
   # Assumes there was an NA value in each row
@@ -58,3 +74,18 @@ tabulate_edges <- function(input, iscsvfile = TRUE, silentNodes = 0){
                           saveDataVar = saveDataVar)
   return(objectsReturned)
 }
+
+
+stop_txt <- function() {
+  stop_txt = "Invalid input type. \nPlease input file path as character or input data.frame directly."
+  stop(stop_txt, call. = FALSE)
+}
+
+# generic_char <- function(input, fun, ...) {
+#   if(!file.exists(input)) {
+#     stop ("FILE NOT FOUND!", call. = FALSE)
+#   } else {
+#     df <- read.csv(input)
+#     fun(df)
+#   }
+# }

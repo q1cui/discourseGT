@@ -20,16 +20,16 @@ Saves the requested object file to disk. Saves graphs or summary information she
 Saves information from graphs and data objects created by package. Plots are saved as .tiff at 300 dpi
 }
 \examples{
-\donttest{
+
 attributeData <- attributeData
 df <- sampleData1
 
-prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+prepNet <- tabulate_edges(df, silentNodes = 0)
 baseNet <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 NetPlots2 <- plot2Att(baseNet, attribute1 = attributeData$ethnicity,
 attribute2 = attributeData$gender, attribute.node.labels = attributeData$node,
 attribute1.label = "Ethnicity", attribute2.label = "Gender")
 
 writeData("Sample Data 1", NetPlots2, dirpath = tempdir())
-}
+
 }

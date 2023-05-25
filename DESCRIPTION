@@ -18,14 +18,34 @@ Description: Analyzes group patterns using discourse analysis data with graph th
 License: MIT + file LICENSE
 LazyData: true
 Encoding: UTF-8
-Depends: R (>= 3.5.0)
-Suggests: rmarkdown, markdown, rticles, knitr, R.rsp, BiocManager,
-        ggpubr, sna
-RoxygenNote: 7.0.2
-Imports: igraph, GGally, network, ggplot2, dplyr, ggrepel
+Depends: 
+  R (>= 3.5.0)
+Suggests: 
+    rmarkdown,
+    markdown,
+    rticles,
+    knitr,
+    R.rsp,
+    BiocManager,
+    ggpubr,
+    sna,
+    testthat (>= 3.0.0)
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+    igraph,
+    GGally,
+    network,
+    ggplot2,
+    dplyr,
+    ggrepel,
+    graphics,
+    stats,
+    utils
 NeedsCompilation: no
 Packaged: 2022-10-27 22:59:18 UTC; jitar
-Author: Albert Chai [aut],
+Author: 
+  Albert Chai [aut],
   Andrew Lee [aut],
   Joshua Le [aut],
   Katherine Ly [ctb],
@@ -35,6 +55,7 @@ Author: Albert Chai [aut],
   Qi Cui [aut],
   Stanley Lo [aut, cre]
 Maintainer: Stanley Lo <smlo@ucsd.edu>
-VignetteBuilder: knitr, R.rsp
+VignetteBuilder: knitr
 Repository: CRAN
 Date/Publication: 2022-10-27 23:25:10 UTC
+Config/testthat/edition: 3

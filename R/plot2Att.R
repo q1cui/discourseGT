@@ -16,9 +16,10 @@
 #' @param attribute2.label Name of the attribute 2 info (Required)
 #' @param attribute.node.labels Mapping to the node labels, can be list or column in data frame (Required)
 #' @param attribute.nodesize Size of the nodes. Default will result in size of 10. Can be replaced with custom mapping in list or column in data frame. (Required)
+#' @export
 #' @examples
 #' df <- sampleData1
-#' prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+#' prepNet <- tabulate_edges(df, silentNodes = 0)
 #' baseNet <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 #' attdata <- attributeData
 #' plot2Att(baseNet, prop = 20, graphmode = "fruchtermanreingold",
@@ -69,7 +70,8 @@ plot2Att <- function(data, prop = 20, graphmode = "fruchtermanreingold",
 
 
   #Perform the actual graphing
-  g2plot <- GGally::ggnet2(net = g2,
+  g2plot <- suppressWarnings(
+    GGally::ggnet2(net = g2,
                    arrow.size = 12,
                    arrow.gap = 0.025,
                    edge.size = wpropscaled,
@@ -81,8 +83,8 @@ plot2Att <- function(data, prop = 20, graphmode = "fruchtermanreingold",
                    label.size = 2.5,
                    palette = "BuGn",
                    color.legend = label_att1,
-                   shape.legend = label_att2) +
-    ggplot2::guides(size = FALSE) +  #Displays which legends should be present in the graph
+                   shape.legend = label_att2)) +
+    ggplot2::guides(size = "none") +  #Displays which legends should be present in the graph
     ggplot2::ggtitle(data$project_title) +
     ggplot2::theme(text = ggplot2::element_text(size=15))
 

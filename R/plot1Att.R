@@ -14,9 +14,10 @@
 #' @param attribute.label Name of the attribute info (Required)
 #' @param attribute.node.labels Mapping to the node labels, can be list or column in data frame
 #' @param attribute.nodesize Size of the nodes. Default will result in size of 10. Can be replaced with custom mapping in list or column in data frame. (Required)
+#' @export
 #' @examples
 #' df <- sampleData1
-#' prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+#' prepNet <- tabulate_edges(df, silentNodes = 0)
 #' baseNet <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 #' attdata <- attributeData
 #' plot1Att(baseNet, prop = 20, graphmode = "fruchtermanreingold",
@@ -70,7 +71,8 @@ plot1Att <- function(data, prop = 20, graphmode = "fruchtermanreingold",
     node_label <- attribute.node.labels
 
     # Create the actual plot
-    g2plot <- GGally::ggnet2(net = g2, #ggnet2 does NOT yet support curved edges; the "curved edge plot" uses igraph
+    g2plot <- suppressWarnings(
+      GGally::ggnet2(net = g2, #ggnet2 does NOT yet support curved edges; the "curved edge plot" uses igraph
                              arrow.size = 12,
                              arrow.gap = 0.025,
                              edge.size = wpropscaled,
@@ -80,8 +82,8 @@ plot1Att <- function(data, prop = 20, graphmode = "fruchtermanreingold",
                              label = node_label,
                              label.size = 2.5,
                              palette = "BuGn",
-                             color.legend = label_att1) +
-      ggplot2::guides(size = FALSE) +  #Displays which legends should be present in the graph
+                             color.legend = label_att1)) +
+      ggplot2::guides(size = "none") +  #Displays which legends should be present in the graph
       ggplot2::ggtitle(data$project_title)
   }
 
@@ -101,7 +103,8 @@ plot1Att <- function(data, prop = 20, graphmode = "fruchtermanreingold",
     label_att1 <- "NA"
 
     # Create the plot
-    g2plot <- GGally::ggnet2(net = g2,
+    g2plot <- suppressWarnings(
+      GGally::ggnet2(net = g2,
                              arrow.size = 12,
                              arrow.gap = 0.025,
                              edge.size = wpropscaled,
@@ -111,8 +114,8 @@ plot1Att <- function(data, prop = 20, graphmode = "fruchtermanreingold",
                              label = node_label,
                              label.size = 2.5,
                              palette = "BuGn",
-                             color.legend = label_att1) +
-      ggplot2::guides(size = FALSE) +  #Displays which legends should be present in the graph
+                             color.legend = label_att1)) +
+      ggplot2::guides(size = "none") +  #Displays which legends should be present in the graph
       ggplot2::ggtitle(data$project_title) +
       ggplot2::theme(legend.position = "none") # Hide's the dummy data legends from the graph is user does not enter attributes
   }

@@ -4,12 +4,14 @@
 \name{sampleData1}
 \alias{sampleData1}
 \title{Sample Episode Start and Episode Continuation Data (2 Column)}
-\format{A data frame with 466 rows and 2 variables:
+\format{
+A data frame with 466 rows and 2 variables:
 \describe{
-  \item{ep_start}{If participant in the graph has initiated an episode}
-  \item{ep_cont}{If participant in the graph has raised a response to the previous episode}
-  ...
-}}
+\item{ep_start}{If participant in the graph has initiated an episode}
+\item{ep_cont}{If participant in the graph has raised a response to the previous episode}
+...
+}
+}
 \usage{
 sampleData1
 }

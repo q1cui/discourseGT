@@ -4,12 +4,10 @@
 \alias{edgelist_raw}
 \title{Process raw order lists from two column format to edge lists}
 \usage{
-edgelist_raw(input_file, iscsvfile = TRUE)
+edgelist_raw(input_file)
 }
 \arguments{
 \item{input_file}{Source of the raw input file. Must be in a .csv format}
-
-\item{iscsvfile}{Sets if the input_file is a csv file or a R data frame object}
 }
 \value{
 Saves the weight and edge lists as a data.frame object or a .csv file to disk.
@@ -19,6 +17,6 @@ Takes raw input that is in a 2 column format/question-and-response format and ge
 }
 \examples{
 df <- sampleData1
-prepNet <- edgelist_raw(df, iscsvfile = FALSE)
+prepNet <- edgelist_raw(df)
 
 }

@@ -17,10 +17,11 @@
 #' @param scaledMin If scaledEdgeLines = TRUE, then what the lightest weight should be scaled to
 #' @param scaledMax If scaledEdgeLines = TRUE, then what the heaviest weight should be scaled to
 #' @return Returns graphical plot to disk, if selected, or to R console
+#' @export
 #' @examples
 #'
 #' df <- sampleData1
-#' prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+#' prepNet <- tabulate_edges(df, silentNodes = 0)
 #' baseNet <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 #'
 #' #Plot the graph
@@ -64,7 +65,7 @@ basicPlot <- function(ginp, graph_selection_input = 0,
     plot(g, edge.width = igraph::E(g)$weight, edge.color = "black", edge.curved = curvedEdgeLines, edge.arrow.size = 0.5 * arrowSizeMultiplier, edge.arrow.width = 1.5)
   }
   else{
-    cat("Invalid scale input")
+    warning("Invalid scale input")
   }
 
   title(project_title)

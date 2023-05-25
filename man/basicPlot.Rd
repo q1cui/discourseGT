@@ -35,12 +35,12 @@ basicPlot(
 Returns graphical plot to disk, if selected, or to R console
 }
 \description{
-Plots the graph using the base plot function. To map attributes on the graph use `plot1Att` for 1 attribute or `plot2Att` for 2 attributes.
+Plots the graph using the base plot function. To map attributes on the graph use \code{plot1Att} for 1 attribute or \code{plot2Att} for 2 attributes.
 }
 \examples{
 
 df <- sampleData1
-prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+prepNet <- tabulate_edges(df, silentNodes = 0)
 baseNet <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 
 #Plot the graph

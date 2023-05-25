@@ -14,18 +14,30 @@
 #'
 #' @param data Original raw input data in ordered question/response 2 column format
 #' @param convoMinutes Time length of the conversation in the graph in minutes
-#' @param iscsvfile Sets if the input data file to function is a .csv file or a R data frame object
 #' @param silentNodes The number of nodes that do not interact with other nodes but are in the group
 #' @return Creates a plot returning the questions per hour versus responses per hour, frequency plot of the number of episodes, and normalized turn ratio
+#' @export
 #' @examples
 #' df <- sampleData1
-#' plotNGTData(df, convoMinutes = 60, iscsvfile = FALSE, silentNodes = 0)
+#' plotNGTData(df, convoMinutes = 60, silentNodes = 0)
 
-plotNGTData <- function(data, convoMinutes, iscsvfile = TRUE, silentNodes = 0){
-  #Read the .csv file if the raw file is a .csv file, else read the data frame object direct with data copy clone
-  if(iscsvfile == TRUE){
-    data <- read.csv(data)
+plotNGTData <- function(data, convoMinutes, silentNodes = 0) UseMethod("plotNGTData")
+
+#' @export
+plotNGTData.default  <- function(data, convoMinutes, silentNodes = 0) stop_txt()
+
+#' @export
+plotNGTData.character  <- function(data, convoMinutes, silentNodes = 0) {
+  if(!file.exists(data)) {
+    stop ("FILE NOT FOUND!", call. = FALSE)
+  } else {
+    df <- read.csv(data)
+    plotNGTData(df, convoMinutes, silentNodes)
   }
+}
+
+#' @export
+plotNGTData.data.frame <- function(data, convoMinutes, silentNodes = 0){
 
   #Create a copy of raw file for processing
   raw <- data
@@ -154,7 +166,7 @@ plotNGTData <- function(data, convoMinutes, iscsvfile = TRUE, silentNodes = 0){
     count_master$Freq.x <- 0
     count_master <- count_master[, c("Var1", "Freq.x", "Freq.y")]
   }
-  
+
   colnames(count_master)[colnames(count_master)=="Var1"] <- "participant"
   colnames(count_master)[colnames(count_master)=="Freq.x"] <- "ep_start"
   colnames(count_master)[colnames(count_master)=="Freq.y"] <- "ep_cont"

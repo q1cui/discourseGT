@@ -13,9 +13,10 @@
 #' @param display Should the output be displayed in the R console?
 #' Results are saved as the project name in the initial config data as a text file on disk.
 #' @return Prints organized summary of all results of the graph with modular components on console or to .txt file on disk.
+#' @export
 #' @examples
 #' df <- sampleData1
-#' prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+#' prepNet <- tabulate_edges(df, silentNodes = 0)
 #' prepGraphs <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 #' coreNet <- coreNetAnalysis(prepGraphs)
 #' subgroup <- subgroupsNetAnalysis(prepGraphs, raw_input = df)

@@ -21,12 +21,13 @@
 #' @param objectfile The saved data object data file
 #' @param dirpath The working directory that the files will be saved to. Path required for write function to work. Current directory, use "." as the dirpath
 #' @return Saves the requested object file to disk. Saves graphs or summary information sheets.
+#' @export
 #' @examples
 #'
 #' attributeData <- attributeData
 #' df <- sampleData1
 #'
-#' prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+#' prepNet <- tabulate_edges(df, silentNodes = 0)
 #' baseNet <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 #' NetPlots2 <- plot2Att(baseNet, attribute1 = attributeData$ethnicity,
 #' attribute2 = attributeData$gender, attribute.node.labels = attributeData$node,

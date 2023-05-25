@@ -21,7 +21,7 @@ Prepares the graphical object from the prepared edge and weight list data frame
 }
 \examples{
 df <- sampleData1
-prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+prepNet <- tabulate_edges(df, silentNodes = 0)
 baseNet <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 
 }

@@ -12,10 +12,10 @@
 #' @param normalized Normalize the betweeness centrality values
 #'
 #' @return Saves number of potential cliques, cores, symmetry of the graph, dyads in graphs, node composition in proposed cliques, neighbors adjacent to each node, transitivity (local and global) as a list object
-#'
+#' @export
 #' @examples
 #' df <- sampleData1
-#' prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+#' prepNet <- tabulate_edges(df, silentNodes = 0)
 #' baseNet <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 #' subgroupsNetAnalysis(baseNet, raw_input = df)
 #'
@@ -26,7 +26,7 @@ subgroupsNetAnalysis <- function(ginp, raw_input = NULL, normalized = FALSE){
   g <- igraph::graph_from_adjacency_matrix(ginp$graphmatrix, mode = "undirected")
 
   # Determine subgroups with the Girvan-Newman algorithm
-  tabEdgeTemp <- tabulate_edges(input = raw_input, iscsvfile = FALSE)
+  tabEdgeTemp <- tabulate_edges(input = raw_input)
   prepGraphsDirTemp <- prepareGraphs(raw_data_input = tabEdgeTemp)
   g_sub <- suppressWarnings(igraph::cluster_edge_betweenness(prepGraphsDirTemp$graph))
 

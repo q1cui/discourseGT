@@ -11,9 +11,10 @@
 #' @param project_title The title of the project.
 #' @param weightedGraph Graph will add weights to the edges to a set of nodes based on the weight specified on the list. Default allows for weights on the graph.
 #' @return Stores the igraph graph object, graph adjacency matrix, edge and weight lists, project title, and a user option for weighted to list object.
+#' @export
 #' @examples
 #' df <- sampleData1
-#' prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+#' prepNet <- tabulate_edges(df, silentNodes = 0)
 #' baseNet <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 #'
 

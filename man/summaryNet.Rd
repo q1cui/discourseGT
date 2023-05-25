@@ -12,11 +12,11 @@ summaryNet(
 )
 }
 \arguments{
-\item{netintconfigData}{Data object where the graph configuration data is stored (from `prepareGraphs`)}
+\item{netintconfigData}{Data object where the graph configuration data is stored (from \code{prepareGraphs})}
 
-\item{coreNetAnalysisData}{Data object where the core analysis data is stored (from `coreNetAnalysis`)}
+\item{coreNetAnalysisData}{Data object where the core analysis data is stored (from \code{coreNetAnalysis})}
 
-\item{subgroupsNetAnalysisData}{Data object where subgroup analysis data is stored (from `subgroupsNetAnalysis`)}
+\item{subgroupsNetAnalysisData}{Data object where subgroup analysis data is stored (from \code{subgroupsNetAnalysis})}
 
 \item{display}{Should the output be displayed in the R console?
 Results are saved as the project name in the initial config data as a text file on disk.}
@@ -29,7 +29,7 @@ Returns a summary of the processed graph results on console. The initial graph c
 }
 \examples{
 df <- sampleData1
-prepNet <- tabulate_edges(df, iscsvfile = FALSE, silentNodes = 0)
+prepNet <- tabulate_edges(df, silentNodes = 0)
 prepGraphs <- prepareGraphs(prepNet, project_title = "Sample Data 1", weightedGraph = TRUE)
 coreNet <- coreNetAnalysis(prepGraphs)
 subgroup <- subgroupsNetAnalysis(prepGraphs, raw_input = df)
