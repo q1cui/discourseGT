@@ -12,7 +12,7 @@ Graphs, nodes, and edges may be characterized in various ways. For example, the 
 To get started installing the package, run the command `install.packages('discourseGT')` in R, which will download the most stable package from CRAN.  
 
 ## How to Use
-The key functions and examples of how to use this package can be found in [this document](https://github.com/q1cui/discourseGT/blob/cc592b48f9e0e70bf6ae82c91b6008b81b3f94e9/vignettes/discourseGT_new.pdf).
+The key functions and examples of how to use this package can be found in [this document](https://github.com/q1cui/discourseGT/blob/main/doc/discourseGT.pdf).
 
 ## How to reach out?
 ### Where do I report bugs?
