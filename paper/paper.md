@@ -118,7 +118,7 @@ prepNet <- prepareGraphs(
 
 The graph settings specified by `prepareGraphs` will influence the analytical output of downstream functions.
 
-## Running Graph Theory Analysis
+## Running Graph Analysis
 ``discourseGT`` offers graph theory-based analytics via two separate functions: `coreNetAnalysis()` and `subgroupsNetAnalysis()`. 
 
 `coreNetAnalysis()` will perform core graph theory operations, such as the counting number of nodes and edges and calculating edge weights, average graph degree, centrality, and other graph theory parameters [@Chai_2019].
