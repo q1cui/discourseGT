@@ -86,7 +86,7 @@ install.packages("discourseGT")
 library(discourseGT)
 data(sampleData1)
 # Calculate the weighted edge list
-tabEdge <- tabulate_edges(sampleData1, iscsvfile = FALSE, silentNodes = 0)
+tabEdge <- tabulate_edges(sampleData1, silentNodes = 0)
 # Check the weighted edge list
 head(tabEdge$master)
 ```
@@ -171,7 +171,7 @@ basicPlot(prepNet, graph_selection_input = 0, curvedEdgeLines = TRUE,
 
 ```r
 plotNGTData(data = sampleData1, convoMinutes = 90,
-            iscsvfile = FALSE, silentNodes = 0)
+            silentNodes = 0)
 ```
 
 # Conclusions
