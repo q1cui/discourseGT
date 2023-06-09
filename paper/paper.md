@@ -7,6 +7,10 @@ tags:
   - discourseGT
   - R
 authors:
+  - name: Qi Cui
+    orcid: 0000-0002-3034-1143 
+    corresponding: true 
+    affiliation: 1
   - name: Joshua P. Le
     orcid: 0000-0003-0872-7098
     affiliation: 1
@@ -27,17 +31,14 @@ authors:
     orcid: 0000-0003-3574-2197
     corresponding: true 
     affiliation: 1
-  - name: Qi Cui
-    orcid: 0000-0002-3034-1143 
-    corresponding: true 
-    affiliation: 1
+
 
 affiliations:
  - name: 'University of California, San Diego'
    index: 1
  - name: 'University of California, Los Angeles'
    index: 2
-citation_author: Joshua P. Le et. al.
+citation_author: Qi Cui et. al.
 date: 9 June 2022
 year: 2022
 bibliography: references.bib
