@@ -8,11 +8,13 @@ tags:
   - R
 authors:
   - name: Qi Cui
-    orcid: 0000-0002-3034-1143 
+    orcid: 0000-0002-3034-1143
+    equal-contrib: true
     corresponding: true 
     affiliation: 1
   - name: Joshua P. Le
     orcid: 0000-0003-0872-7098
+    equal-contrib: true
     affiliation: 1
   - name: Albert Chai
     orcid: 0000-0002-2340-7044
