@@ -26,7 +26,7 @@ Some features of the package are:
 A detailed tutorial can be found at \url{https://github.com/q1cui/discourseGT/blob/cc592b48f9e0e70bf6ae82c91b6008b81b3f94e9/vignettes/discourseGT_new.pdf}
 }
 \author{
-\strong{Maintainer}: Stanley Lo \email{smlo@ucsd.edu}
+\strong{Maintainer}: Qi Cui \email{q1cui@ucsd.edu}
 
 Authors:
 \itemize{
@@ -34,7 +34,7 @@ Authors:
   \item Andrew Lee \email{aleet383@ucla.edu}
   \item Joshua Le \email{jpl038@ucsd.edu}
   \item Jitarth Sheth \email{jhsheth@ucsd.edu}
-  \item Qi Cui \email{q1cui@ucsd.edu}
+  \item Stanley Lo \email{smlo@ucsd.edu}
 }
 
 Other contributors:
