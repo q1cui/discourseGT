@@ -26,4 +26,4 @@ The easiest way is to open an issue - this way, your question is also visible to
 
 ## License
 This package is MIT Licensed  
-Written by Albert Chai <@albertchai>, Andrew Lee <@alee4738>, Joshua Le <@jpl038>, Jitarth Sheth <@jshethbright>, Qi Cui <@q1cui>, and Stanley Lo <@smlo>
+Written by Albert Chai <@albertchai>, Andrew S. Lee <@alee4738>, Joshua P. Le <@jpl038>, Jitarth Sheth <@jshethbright>, Qi Cui <@q1cui>, and Stanley M. Lo <@smlo>
