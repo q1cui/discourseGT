@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2023 albertchai, alee4738, jpl038, jshethbright, q1cui, smlo
+Copyright (c) 2023 Albert Chai <@albertchai>, Andrew S. Lee <@alee4738>, Joshua P. Le <@jpl038>, Jitarth Sheth <@jshethbright>, Qi Cui <@q1cui>, and Stanley M. Lo <@smlo>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
