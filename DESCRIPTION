@@ -2,7 +2,7 @@ Package: discourseGT
 Type: Package
 Title: Analyze Group Patterns using Graph Theory in Educational
         Settings
-Version: 1.1.8
+Version: 1.1.8.9000
 Authors@R: c(
   person("Albert","Chai",   role=c("aut"), email = "albertchai@ucsd.edu"),
   person("Andrew","Lee",    role=("aut"), email = "aleet383@ucla.edu"),
