@@ -30,7 +30,9 @@ bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE
+  )
 ```
 
 # discourseGT Workflow {#workflow}
@@ -103,7 +105,7 @@ The \pkg{discourseGT} software package comes equipped with example data. Here, w
 
 To get started, install the software package through the Comprehensive \proglang{R} Archive Network (CRAN). Load it using:
 
-```{r tidy=TRUE,tidy.opts=list(width.cutoff=60)}
+```{r loadpkg, tidy=TRUE,tidy.opts=list(width.cutoff=60)}
 library(discourseGT)
 ```
 
@@ -131,7 +133,7 @@ Recall that an \pkg{igraph} object is the core input to many of the modular anal
   *	The title of the project. Default: `null`
   *	Is the graph weighted? Default: `TRUE`
 
-```{r prepNet, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+```{r prepNet}
 prepNet <- prepareGraphs(tabEdge, 
                          project_title = "Sample Data 1",
                          weightedGraph = TRUE)
@@ -148,7 +150,7 @@ coreNet <- coreNetAnalysis(prepNet)
 
 The second, `subgroupsNetAnalysis()`, utilizes the Girvan-Newman algorithm to detect subgroups within the overall network [@Girvan_2002], such that:
 
-```{r subgroups, warnings = FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+```{r subgroups, warnings = FALSE}
 subNet <- subgroupsNetAnalysis(prepNet, raw_input = data,
                                normalized = TRUE)
 ```
@@ -156,7 +158,7 @@ subNet <- subgroupsNetAnalysis(prepNet, raw_input = data,
 ## Generating Summaries
 While it is possible to display the generated \pkg{igraph} object, core network statistics, and subgroup statistics as separate outputs, it can be helpful to view them as an overall summary of a network's graph theory analytics. Furthermore, combining all of these outputs into a single variable is a necessary step in exporting them as a single text file. The `summaryNet()` function will combine the outputs from `prepareGraphs()`, `coreNetAnalysis()`, and \newline`subgroupsNetAnalysis()` as such:
 
-```{r summary, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+```{r summary}
 summaryData <- summaryNet(netintconfigData = prepNet, 
                           coreNetAnalysisData = coreNet, 
                           subgroupsNetAnalysisData = subNet, 
@@ -265,13 +267,14 @@ The graph will now appear in \pkg{Cytoscape}, where further modifications can be
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=2]{maintext_files/figure-latex/cytoscape_updated.png}
+\includegraphics[width=0.8\textwidth]{maintext_files/figure-latex/cytoscape_updated.png}
 \end{figure}
 
 ## Running Non-Graph Theory Analysis
 Recall that \pkg{discourseGT} does not require an \pkg{igraph} object to produce NGT analysis. Rather, `plotNGTData()` utilizes the raw, two column data to generate its output. Additionally, it requires the duration of the conversation (in minutes) and the number of silent nodes (i.e. participants who did not speak at all) in the discourse network. The function outputs the previously-discussed NGT parameters and three individual graphs. The raw data are also exported alongside the graphs, giving the user greater flexibility in creating their own NGT visualizations.
 
-```{r ngt_plotsdpi = 300, fig.height=6, fig.width=9, warning = FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+```{r ngt_plots, dpi = 300, fig.height=6, fig.width=9, warning = FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+options(width = 60)
 plotNGTData(data = data, convoMinutes = 90,
             silentNodes = 0)
 ```

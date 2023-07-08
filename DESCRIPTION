@@ -1,45 +1,52 @@
 Package: discourseGT
-Type: Package
-Title: Analyze Group Patterns using Graph Theory in Educational
-        Settings
+Title: Analyze Group Patterns using Graph Theory in Educational Settings
 Version: 1.1.8.9000
 Authors@R: c(
-  person("Albert","Chai",   role=c("aut"), email = "albertchai@ucsd.edu"),
-  person("Andrew","Lee",    role=("aut"), email = "aleet383@ucla.edu"),
-  person("Joshua","Le",     role=c("aut"), email = "jpl038@ucsd.edu"),
-  person("Katherine","Ly",  role=c("ctb"), email = "ktl045@ucsd.edu"),
-  person("Kevin","Banh",    role=c("ctb"), email = "kebanh@ucsd.edu"),
-  person("Priya","Pahal",   role=c("ctb"), email = "ppahal@ucsd.edu"),
-  person("Jitarth","Sheth", role=c("aut"), email = "jhsheth@ucsd.edu"),
-  person("Qi","Cui",        role=c("aut", "cre"), email = "q1cui@ucsd.edu"),
-  person("Stanley","Lo",    role=c("aut"), email = "smlo@ucsd.edu"))
-Description: Analyzes group patterns using discourse analysis data with graph theory mathematics. Takes the order of which individuals talk and converts it to a network edge and weight list. Returns the density, centrality, centralization, and subgroup information for each group. Based on the analytical framework laid out in Chai et al. (2019) <doi:10.1187/cbe.18-11-0222>.
+    person("Albert", "Chai", , "albertchai@ucsd.edu", role = "aut"),
+    person("Andrew", "Lee", , "aleet383@ucla.edu", role = "aut"),
+    person("Joshua", "Le", , "jpl038@ucsd.edu", role = "aut"),
+    person("Katherine", "Ly", , "ktl045@ucsd.edu", role = "ctb"),
+    person("Kevin", "Banh", , "kebanh@ucsd.edu", role = "ctb"),
+    person("Priya", "Pahal", , "ppahal@ucsd.edu", role = "ctb"),
+    person("Jitarth", "Sheth", , "jhsheth@ucsd.edu", role = "aut"),
+    person("Qi", "Cui", , "q1cui@ucsd.edu", role = c("aut", "cre")),
+    person("Stanley", "Lo", , "smlo@ucsd.edu", role = "aut")
+  )
+Description: Analyzes group patterns using discourse analysis data with
+    graph theory mathematics. Takes the order of which individuals talk
+    and converts it to a network edge and weight list. Returns the
+    density, centrality, centralization, and subgroup information for each
+    group. Based on the analytical framework laid out in Chai et al.
+    (2019) <doi:10.1187/cbe.18-11-0222>.
 License: MIT + file LICENSE
-LazyData: true
-Encoding: UTF-8
 Depends: 
-  R (>= 3.5.0)
-Suggests: 
-    rmarkdown,
-    markdown,
-    rticles,
-    knitr,
-    R.rsp,
-    BiocManager,
-    ggpubr,
-    sna,
-    testthat (>= 3.0.0)
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+    R (>= 3.5.0)
 Imports: 
-    igraph,
-    GGally,
-    network,
-    ggplot2,
     dplyr,
+    GGally,
+    ggplot2,
     ggrepel,
     graphics,
+    igraph,
+    network,
     stats,
     utils
-VignetteBuilder: knitr
+Suggests: 
+    BiocManager,
+    formatR,
+    ggpubr,
+    knitr,
+    markdown,
+    R.rsp,
+    rmarkdown,
+    rticles,
+    sna,
+    testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr,
+    R.rsp
 Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
