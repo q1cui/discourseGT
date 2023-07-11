@@ -41,7 +41,7 @@ stable package from CRAN.
 
 The key functions and examples of how to use this package can be found
 in [this
-document](https://github.com/q1cui/discourseGT/blob/main/doc/discourseGT.pdf).
+document](https://github.com/q1cui/discourseGT/tree/main/vignettes/discourseGT.pdf).
 
 ## How to reach out?
 
