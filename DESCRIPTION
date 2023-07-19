@@ -1,6 +1,6 @@
 Package: discourseGT
 Title: Analyze Group Patterns using Graph Theory in Educational Settings
-Version: 1.1.8.9000
+Version: 1.2.0
 Authors@R: c(
     person("Albert", "Chai", , "albertchai@ucsd.edu", role = "aut"),
     person("Andrew", "Lee", , "aleet383@ucla.edu", role = "aut"),
