@@ -183,6 +183,6 @@ We developed an R package ``discourseGT`` that considers student discourse as a 
 # Acknowledgements
 We thank B. N. Nguyen and S. Lam for their contributions to the early testing of the package with example datasets. We thank L. Hobbie for his input on several package functions and usability. We are grateful for the support and work that CRAN Volunteers put into examining and publishing ``R`` packages on the Comprehensive ``R`` Archive Network. 
 
-This material is based upon work supported by the National Science Foundation under grant number DUE-1712211. The authors declare that there are no conflicts of interest.
+This material is based upon work supported by the National Science Foundation under grant number DUE-2022975. The authors declare that there are no conflicts of interest.
 
 # References
