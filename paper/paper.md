@@ -166,8 +166,6 @@ basicPlot(prepNet, graph_selection_input = 0, curvedEdgeLines = TRUE,
           scaledMin = 1, scaledMax = 10)
 ```
 
-![](joss-manuscript-v4_files/figure-latex/baseplot-1.pdf)<!-- --> 
-
 ## Running Non-Graph Theory Analysis
 ``discourseGT`` does not require an ``igraph`` object to produce a non-graph theory (NGT) analysis. Rather, the `plotNGTData()` function utilizes the two-column raw data to generate its output. Additionally, it requires the duration of the conversation (in minutes) and the number of silent nodes (i.e. students who did not speak at all) in the discourse network.
 
