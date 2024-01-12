@@ -46,6 +46,8 @@ VignetteBuilder:
     knitr,
     R.rsp
 Config/testthat/edition: 3
+URL: https://github.com/q1cui/discourseGT
+BugReports: https://github.com/q1cui/discourseGT/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
